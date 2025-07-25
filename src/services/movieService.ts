@@ -36,9 +36,10 @@ class MovieService {
     return response.results
   }
   async getMoviesByGenre(genreId: number): Promise<Movie[]> {
-    const response = await this.fetchFromAPI<TMDBResponse<Movie>>(`/discover/movie&with_genres=${genreId}`)
+    const response = await this.fetchFromAPI<TMDBResponse<Movie>>(`/discover/movie?with_genres=${genreId}`)
     return response.results
   }
+
 
   async getMovieDetails(movieId: number): Promise<MovieDetails> {
     return await this.fetchFromAPI<MovieDetails>(`/movie/${movieId}`)
@@ -61,9 +62,10 @@ class MovieService {
 
   async searchMovies(query: string): Promise<Movie[]> {
     const encodedQuery = encodeURIComponent(query)
-    const response = await this.fetchFromAPI<TMDBResponse<Movie>>(`/search/movie&query=${encodedQuery}`)
+    const response = await this.fetchFromAPI<TMDBResponse<Movie>>(`/search/movie?query=${encodedQuery}`)
     return response.results
   }
+
 
   async getGenres(): Promise<Genre[]> {
     const response = await this.fetchFromAPI<{ genres: Genre[] }>("/genre/movie/list")

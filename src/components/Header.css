@@ -17,6 +17,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 36px 166px 52px 224px;
+  gap: 24px;
 }
 
 .header-left {

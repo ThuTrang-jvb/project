@@ -1,21 +1,17 @@
 export interface Movie {
-  id: number
-  title: string
-  poster_path?: string
-  backdrop_path?: string
-  vote_average: number
-  release_date: string
-  overview?: string
-  genre_ids?: number[]
-  genres?: Genre[]
-  runtime?: number
-  director?: string
-  cast?: Cast[]
-  videos?: Video[]
   adult: boolean
+  backdrop_path: string | null
+  genre_ids: number[]
+  id: number
   original_language: string
   original_title: string
+  overview: string
   popularity: number
+  poster_path: string | null
+  release_date: string
+  title: string
+  video: boolean
+  vote_average: number
   vote_count: number
 }
 
@@ -57,7 +53,10 @@ export interface MovieDetails extends Movie {
   spoken_languages: SpokenLanguage[]
   status: string
   tagline?: string
+  runtime: number                  
+  genres: Genre[]                   
 }
+
 
 export interface ProductionCompany {
   id: number

@@ -1,0 +1,80 @@
+.genre-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.genre-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.genre-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  background-color: #222;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #444;
+  border-radius: 4px;
+  width: 150px;
+}
+
+.genre-item {
+  display: block;
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.genre-item:hover {
+  background-color: #444;
+}
+.genre-dropdown {
+  position: relative;
+}
+
+.genre-button {
+  background: none;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 8px 12px;
+  font-size: 16px;
+  color: white;
+}
+
+.genre-grid-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 600px;
+  max-height: 400px;
+  background: #1e1e1e;
+  border: 1px solid #444;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  z-index: 1000;
+  overflow-y: auto;
+  border-radius: 8px;
+}
+
+.genre-grid-item {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 6px;
+  transition: color 0.2s ease;
+  border-radius: 4px;
+}
+
+.genre-grid-item:hover {
+  background-color: #333;
+  color: #00bcd4;
+}

@@ -2,6 +2,8 @@ import { useState } from "react"
 import { useLocation } from "react-router-dom"
 import { Search, Bell, Menu } from "lucide-react"
 import { movieService } from "../services/movieService"
+import GenreDropdown from "../components/GenreDropdown"
+import Country from "../components/Country"
 import type { Movie } from "../types/movie"
 import "./Header.css"
 
@@ -38,8 +40,8 @@ const Header = (): React.ReactElement => {
         <div className="header-left">
           <nav className={`nav ${isMenuOpen ? "nav-open" : ""}`}>
             <a href="/" className={`nav-link ${isActive("/") ? "active" : ""}`}>Home</a>
-            <a href="/genre" className={`nav-link ${isActive("/genre") ? "active" : ""}`}>Genre</a>
-            <a href="/country" className={`nav-link ${isActive("/country") ? "active" : ""}`}>Country</a>
+            <GenreDropdown />
+            <Country />
           </nav>
         </div>
 
@@ -91,7 +93,7 @@ const Header = (): React.ReactElement => {
           </nav>
         </div>
 
-        <Bell className="header-icon" size={20} />
+        <Bell className="header-icon" size={12} />
       </div>
     </header>
   )
