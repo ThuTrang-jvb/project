@@ -24,6 +24,8 @@ const MovieDetail = (): React.ReactElement => {
           movieService.getMovieCast(movieId),
           movieService.getSimilarMovies(movieId),
         ])
+        console.log("Backdrop URL:", getImageUrl(movieDetails.backdrop_path, "w1280"))
+        console.log("Backdrop path:", movieDetails.backdrop_path)
 
         setMovie(movieDetails)
         setCast(movieCast.slice(0, 5)) 
@@ -64,6 +66,7 @@ const MovieDetail = (): React.ReactElement => {
         <div className="movie-backdrop">
           <img src={getImageUrl(movie.backdrop_path, "w1280") || "/placeholder.svg"} alt={movie.title} />
           <div className="backdrop-overlay"></div>
+          
         </div>
 
         <div className="movie-content">

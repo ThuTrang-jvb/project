@@ -10,13 +10,17 @@ function App(): React.ReactElement {
   return (
     <div className="App">
       <Header />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/movie/:id" element={<MovieDetail />} />
-        <Route path="/genre/:id" element={<GenrePage />} />
-      </Routes>
+      <div className="page-content">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/movie/:id" element={<MovieDetail />} />
+          <Route path="/genre" element={<GenrePage />} />
+          <Route path="/genre/:id" element={<GenrePage />} />
+        </Routes>
+      </div>
     </div>
   )
 }
+
 
 export default App
