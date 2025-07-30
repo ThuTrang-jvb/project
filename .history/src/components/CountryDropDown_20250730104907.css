@@ -1,0 +1,40 @@
+.country-dropdown {
+  position: relative;
+  display: inline-block;
+  margin: 1rem;
+}
+
+.country-button {
+  padding: 8px 12px;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.country-list {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  z-index: 10;
+  background-color: #222;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 200px;
+}
+
+.country-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: white;
+}
+
+.country-item:hover {
+  background-color: #444;
+}

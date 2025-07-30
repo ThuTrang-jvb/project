@@ -1,0 +1,28 @@
+.genre-movie-list {
+  padding: 24px;
+  color: white;
+}
+ 
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+ 
+.movie-card {
+  background-color: #222;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+ 
+.movie-card img {
+  width: 100%;
+  border-radius: 4px;
+}
+.movie-title {
+  display: flex;
+  ali
+  gap: 3px;
+}

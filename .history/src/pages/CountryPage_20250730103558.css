@@ -1,0 +1,17 @@
+.country-movie-list {
+  padding: 20px;
+  background-color: #111;
+  color: white;
+  min-height: 100vh;
+}
+
+.country-movie-list h2 {
+  font-size: 24px;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.country-movie-list p {
+  font-size: 18px;
+  color: #ccc;
+}
