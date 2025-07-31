@@ -3,8 +3,6 @@ import { useSearchParams } from "react-router-dom"
 import type { Country, Movie } from "../types/movie"
 import MovieGrid from "../components/MovieGrid"
 import "./GenrePage.css"
-import SkeletonMovieCard from "../components/SkeletonMovieCard"
-
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY
 const BASE_URL = import.meta.env.VITE_TMDB_BASE_URL
@@ -86,7 +84,7 @@ const CountryPage = (): React.ReactElement => {
     }
   }, [countryCodes])
 
-  // Cập nhật phim sau khi tải xong 
+  // Cập nhật phim sau khi tải xong
   useEffect(() => {
     if (!moviesLoading) {
       setMovies(pendingMovies)
@@ -111,13 +109,8 @@ const CountryPage = (): React.ReactElement => {
 
       {/* Loading - chỉ hiển thị nếu chưa có phim */}
       {isOverlayVisible && movies.length === 0 && (
-        <div className="movie-grid">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <SkeletonMovieCard key={i} />
-          ))}
-        </div>
+        <p style={{ color: "#fff", padding: "1rem" }}>Loading...</p>
       )}
-
 
       {/* Không có kết quả */}
       {!isOverlayVisible && movies.length === 0 && (
@@ -126,7 +119,14 @@ const CountryPage = (): React.ReactElement => {
 
       {/* Hiển thị phim và overlay nếu đang tải */}
       {movies.length > 0 && (
-        <MovieGrid title="" movies={movies} />
+        <>
+          {isOverlayVisible && (
+            <div className="loading-overlay">
+              <div className="spinner">Loading...</div>
+            </div>
+          )}
+          <MovieGrid title="" movies={movies} />
+        </>
       )}
     </div>
   )

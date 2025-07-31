@@ -111,13 +111,8 @@ const CountryPage = (): React.ReactElement => {
 
       {/* Loading - chỉ hiển thị nếu chưa có phim */}
       {isOverlayVisible && movies.length === 0 && (
-        <div className="movie-grid">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <SkeletonMovieCard key={i} />
-          ))}
-        </div>
+        <p style={{ color: "#fff", padding: "1rem" }}>Loading...</p>
       )}
-
 
       {/* Không có kết quả */}
       {!isOverlayVisible && movies.length === 0 && (
@@ -126,7 +121,14 @@ const CountryPage = (): React.ReactElement => {
 
       {/* Hiển thị phim và overlay nếu đang tải */}
       {movies.length > 0 && (
-        <MovieGrid title="" movies={movies} />
+        <>
+          {isOverlayVisible && (
+            <div className="loading-overlay">
+              <div className="spinner">Loading...</div>
+            </div>
+          )}
+          <MovieGrid title="" movies={movies} />
+        </>
       )}
     </div>
   )

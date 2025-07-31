@@ -126,7 +126,14 @@ const CountryPage = (): React.ReactElement => {
 
       {/* Hiển thị phim và overlay nếu đang tải */}
       {movies.length > 0 && (
-        <MovieGrid title="" movies={movies} />
+        <>
+          {isOverlayVisible && (
+            <div className="loading-overlay">
+              <div className="spinner">Loading...</div>
+            </div>
+          )}
+          <MovieGrid title="" movies={movies} />
+        </>
       )}
     </div>
   )

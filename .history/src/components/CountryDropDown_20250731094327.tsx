@@ -73,13 +73,6 @@ const CountryDropdown = (): React.ReactElement => {
     }
   }, [isOpen, selectedCountries])
 
-  useEffect(() => {
-    if (!location.pathname.startsWith("/country")) return
-    if (!isOpen) {
-      setSelectedCountries([])
-    }
-  }, [location.pathname, isOpen])
-
   const filteredCountries = useMemo(() =>
     countries.filter((country) =>
       `${country.english_name} ${country.native_name || ""}`

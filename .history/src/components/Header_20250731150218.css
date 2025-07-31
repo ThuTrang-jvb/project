@@ -16,7 +16,6 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
 }
 
 .header.shrink {
@@ -238,7 +237,7 @@
   }
 
   .header-icon {
-    display: none;
+    font-size: 14px;
   }
 
   .search-input {

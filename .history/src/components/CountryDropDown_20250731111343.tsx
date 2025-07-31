@@ -1,5 +1,9 @@
-import React, { useEffect, useRef, useState, useMemo } from "react"
+"use client"
+
+import type React from "react"
+import { useEffect, useRef, useState, useMemo } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
+import { movieService } from "../services/movieService" // Import movieService
 import "./CountryDropDown.css"
 
 interface Country {
@@ -22,11 +26,7 @@ const CountryDropdown = (): React.ReactElement => {
   const toggleDropdown = () => setIsOpen(!isOpen)
 
   const toggleCountry = (code: string) => {
-    setSelectedCountries((prev) =>
-      prev.includes(code)
-        ? prev.filter((c) => c !== code)
-        : [...prev, code]
-    )
+    setSelectedCountries((prev) => (prev.includes(code) ? prev.filter((c) => c !== code) : [...prev, code]))
   }
 
   const handleKeyDown = (event: KeyboardEvent) => {
@@ -34,6 +34,7 @@ const CountryDropdown = (): React.ReactElement => {
       const query = selectedCountries.join(",")
       navigate(`/country?code=${query}`)
       setIsOpen(false)
+      setSelectedCountries([])
     }
   }
 
@@ -46,13 +47,11 @@ const CountryDropdown = (): React.ReactElement => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const res = await fetch(
-          `https://api.themoviedb.org/3/configuration/countries?api_key=${import.meta.env.VITE_TMDB_API_KEY}`
-        )
-        const data = await res.json()
-        setCountries(data)
-      } catch (err) {
-        console.error("Failed to fetch countries:", err)
+        const countryList = await movieService.getCountries()
+        setCountries(countryList)
+      } catch (error) {
+        console.error("Failed to fetch countries:", error)
+        // Fallback to mock data is handled by movieService
       }
     }
     fetchCountries()
@@ -80,19 +79,17 @@ const CountryDropdown = (): React.ReactElement => {
     }
   }, [location.pathname, isOpen])
 
-  const filteredCountries = useMemo(() =>
-    countries.filter((country) =>
-      `${country.english_name} ${country.native_name || ""}`
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
-    ), [countries, searchTerm])
+  const filteredCountries = useMemo(
+    () =>
+      countries.filter((country) =>
+        `${country.english_name} ${country.native_name || ""}`.toLowerCase().includes(searchTerm.toLowerCase()),
+      ),
+    [countries, searchTerm],
+  )
 
   return (
     <div className="country-dropdown" ref={dropdownRef}>
-      <button
-        className={`country-button nav-link ${isCountry ? "active" : ""}`}
-        onClick={toggleDropdown}
-      >
+      <button className={`country-button nav-link ${isCountry ? "active" : ""}`} onClick={toggleDropdown}>
         Countries
       </button>
 
@@ -125,7 +122,9 @@ const CountryDropdown = (): React.ReactElement => {
             })}
           </div>
 
-          <div className="country-hint">Press <b>Enter</b> to search</div>
+          <div className="country-hint">
+            Press <b>Enter</b> to search
+          </div>
         </div>
       )}
     </div>

@@ -16,7 +16,6 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
 }
 
 .header.shrink {
@@ -189,17 +188,12 @@
   cursor: pointer;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 768px) {
   .header-container {
     flex-direction: column;
     align-items: stretch; 
     gap: 1rem;
-    padding: 1rem 3rem;
-  }
-
-  .menu-toggle {
-    display: block;
-    margin-left: auto;
+    padding: 1rem;
   }
 
   .header-left,
@@ -227,65 +221,11 @@
     display: flex;
   }
 
-  .nav-link {
-    font-size: 14px;
-    padding: 2px 6px;
-  }
-
-  .header-left,
-  .header-right {
-    gap: 0.75rem;
-  }
-
-  .header-icon {
-    display: none;
-  }
-
   .search-input {
-    width: 300px;
-    max-width: 240px;
-    padding: 0.4rem 1rem 0.4rem 2.2rem;
-    font-size: 14px;
+    max-width: 100%;
   }
 
-  .search-input::placeholder {
-    font-size: 14px;
-  }
-
-  .search-icon {
-    left: 0.6rem;
-    font-size: 14px;
-  }
-  
-}
-
-@media (max-width: 768px) {
-  .nav-link {
-    font-size: 12px;
-    padding: 2px 4px;
-  }
-
-  .header-left,
-  .header-right {
-    gap: 0.5rem;
-  }
-
-  .header-icon {
-    font-size: 12px;
-  }
-
-  .search-input {
-    max-width: 200px;
-    padding: 0.3rem 0.8rem 0.3rem 2rem;
-    font-size: 12px;
-  }
-
-  .search-input::placeholder {
-    font-size: 12px;
-  }
-
-  .search-icon {
-    left: 0.5rem;
-    font-size: 12px;
+  .menu-toggle {
+    display: block;
   }
 }

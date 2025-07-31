@@ -3,8 +3,6 @@ import { useSearchParams } from "react-router-dom"
 import type { Country, Movie } from "../types/movie"
 import MovieGrid from "../components/MovieGrid"
 import "./GenrePage.css"
-import SkeletonMovieCard from "../components/SkeletonMovieCard"
-
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY
 const BASE_URL = import.meta.env.VITE_TMDB_BASE_URL
@@ -16,20 +14,9 @@ const CountryPage = (): React.ReactElement => {
   const [movies, setMovies] = useState<Movie[]>([])
   const [pendingMovies, setPendingMovies] = useState<Movie[]>([])
   const [moviesLoading, setMoviesLoading] = useState(false)
-  const [isOverlayVisible, setOverlayVisible] = useState(false)
 
   const [countries, setCountries] = useState<Country[]>([])
   const [countriesLoading, setCountriesLoading] = useState(true)
-
-  // Overlay loading không bị chớp
-  useEffect(() => {
-    if (moviesLoading) {
-      setOverlayVisible(true)
-    } else {
-      const timeout = setTimeout(() => setOverlayVisible(false), 300)
-      return () => clearTimeout(timeout)
-    }
-  }, [moviesLoading])
 
   useEffect(() => {
     let cancelled = false
@@ -86,7 +73,7 @@ const CountryPage = (): React.ReactElement => {
     }
   }, [countryCodes])
 
-  // Cập nhật phim sau khi tải xong 
+  // ✅ Khi loading xong thì mới update movies → không bị giật
   useEffect(() => {
     if (!moviesLoading) {
       setMovies(pendingMovies)
@@ -105,28 +92,25 @@ const CountryPage = (): React.ReactElement => {
     }).join(", ")
   }
 
+  const isLoading = moviesLoading || countriesLoading
+
   return (
-    <div className="genre-movie-list" style={{ position: "relative", minHeight: "80vh" }}>
+    <div className="genre-movie-list" style={{ position: "relative" }}>
       <h2>{getTitle()}</h2>
 
-      {/* Loading - chỉ hiển thị nếu chưa có phim */}
-      {isOverlayVisible && movies.length === 0 && (
-        <div className="movie-grid">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <SkeletonMovieCard key={i} />
-          ))}
-        </div>
-      )}
-
-
-      {/* Không có kết quả */}
-      {!isOverlayVisible && movies.length === 0 && (
-        <p style={{ color: "#ccc", padding: "1rem" }}>No results found.</p>
-      )}
-
-      {/* Hiển thị phim và overlay nếu đang tải */}
-      {movies.length > 0 && (
-        <MovieGrid title="" movies={movies} />
+      {movies.length === 0 && isLoading ? (
+        <p>Loading...</p>
+      ) : movies.length === 0 ? (
+        <p>No results found.</p>
+      ) : (
+        <>
+          {isLoading && (
+            <div className="loading-overlay">
+              <div className="spinner">Loading...</div>
+            </div>
+          )}
+          <MovieGrid title="" movies={movies} />
+        </>
       )}
     </div>
   )

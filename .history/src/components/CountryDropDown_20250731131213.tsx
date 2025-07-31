@@ -12,10 +12,13 @@ const CountryDropdown = (): React.ReactElement => {
   const location = useLocation()
   const navigate = useNavigate()
   const isCountry = location.pathname.startsWith("/country")
+
   const [isOpen, setIsOpen] = useState(false)
   const [selectedCountries, setSelectedCountries] = useState<string[]>([])
   const [countries, setCountries] = useState<Country[]>([])
   const [searchTerm, setSearchTerm] = useState("")
+  const [debouncedTerm, setDebouncedTerm] = useState(searchTerm)
+
   const dropdownRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -43,6 +46,7 @@ const CountryDropdown = (): React.ReactElement => {
     }
   }
 
+  // Fetch countries once
   useEffect(() => {
     const fetchCountries = async () => {
       try {
@@ -58,6 +62,15 @@ const CountryDropdown = (): React.ReactElement => {
     fetchCountries()
   }, [])
 
+  // Debounce search term
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebouncedTerm(searchTerm)
+    }, 300)
+    return () => clearTimeout(timeout)
+  }, [searchTerm])
+
+  // Handle open dropdown: keyboard & outside click
   useEffect(() => {
     if (isOpen) {
       window.addEventListener("keydown", handleKeyDown)
@@ -73,6 +86,7 @@ const CountryDropdown = (): React.ReactElement => {
     }
   }, [isOpen, selectedCountries])
 
+  // Reset selections if không phải trang country
   useEffect(() => {
     if (!location.pathname.startsWith("/country")) return
     if (!isOpen) {
@@ -80,12 +94,13 @@ const CountryDropdown = (): React.ReactElement => {
     }
   }, [location.pathname, isOpen])
 
+  // Filter countries theo từ khoá tìm kiếm
   const filteredCountries = useMemo(() =>
     countries.filter((country) =>
       `${country.english_name} ${country.native_name || ""}`
         .toLowerCase()
-        .includes(searchTerm.toLowerCase())
-    ), [countries, searchTerm])
+        .includes(debouncedTerm.toLowerCase())
+    ), [countries, debouncedTerm])
 
   return (
     <div className="country-dropdown" ref={dropdownRef}>
@@ -108,7 +123,7 @@ const CountryDropdown = (): React.ReactElement => {
           />
 
           <div className="country-list-scroll">
-            {filteredCountries.map((country) => {
+            {filteredCountries.slice(0, 100).map((country) => {
               const isSelected = selectedCountries.includes(country.iso_3166_1)
               return (
                 <div
@@ -123,9 +138,16 @@ const CountryDropdown = (): React.ReactElement => {
                 </div>
               )
             })}
+            {filteredCountries.length === 0 && (
+              <div style={{ color: "#aaa", textAlign: "center", fontSize: "0.85rem" }}>
+                No countries found.
+              </div>
+            )}
           </div>
 
-          <div className="country-hint">Press <b>Enter</b> to search</div>
+          <div className="country-hint">
+            Press <b>Enter</b> to search
+          </div>
         </div>
       )}
     </div>

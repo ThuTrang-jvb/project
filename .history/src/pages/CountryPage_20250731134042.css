@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
-import type { Country, Movie } from "../types/movie"
+import type { Country, Movie } from "../types"
 import MovieGrid from "../components/MovieGrid"
 import "./GenrePage.css"
-import SkeletonMovieCard from "../components/SkeletonMovieCard"
-
-
+import "./CountryPage.css"
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY
 const BASE_URL = import.meta.env.VITE_TMDB_BASE_URL
 
@@ -17,11 +15,12 @@ const CountryPage = (): React.ReactElement => {
   const [pendingMovies, setPendingMovies] = useState<Movie[]>([])
   const [moviesLoading, setMoviesLoading] = useState(false)
   const [isOverlayVisible, setOverlayVisible] = useState(false)
+  const [hasLoadedOnce, setHasLoadedOnce] = useState(false)
 
   const [countries, setCountries] = useState<Country[]>([])
   const [countriesLoading, setCountriesLoading] = useState(true)
 
-  // Overlay loading không bị chớp
+  // Overlay loading hiển thị mượt, không chớp
   useEffect(() => {
     if (moviesLoading) {
       setOverlayVisible(true)
@@ -86,12 +85,19 @@ const CountryPage = (): React.ReactElement => {
     }
   }, [countryCodes])
 
-  // Cập nhật phim sau khi tải xong 
+  // Cập nhật phim sau khi loading xong
   useEffect(() => {
     if (!moviesLoading) {
       setMovies(pendingMovies)
     }
   }, [moviesLoading])
+
+  // Đánh dấu đã từng có dữ liệu phim
+  useEffect(() => {
+    if (movies.length > 0 && !hasLoadedOnce) {
+      setHasLoadedOnce(true)
+    }
+  }, [movies, hasLoadedOnce])
 
   const getTitle = () => {
     if (countryCodes.length === 0) return "No country selected"
@@ -109,24 +115,26 @@ const CountryPage = (): React.ReactElement => {
     <div className="genre-movie-list" style={{ position: "relative", minHeight: "80vh" }}>
       <h2>{getTitle()}</h2>
 
-      {/* Loading - chỉ hiển thị nếu chưa có phim */}
-      {isOverlayVisible && movies.length === 0 && (
-        <div className="movie-grid">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <SkeletonMovieCard key={i} />
-          ))}
-        </div>
+      {/* Hiện Loading... chỉ nếu chưa có phim lần nào */}
+      {movies.length === 0 && isOverlayVisible && !hasLoadedOnce && (
+        <p>Loading...</p>
       )}
 
-
-      {/* Không có kết quả */}
-      {!isOverlayVisible && movies.length === 0 && (
-        <p style={{ color: "#ccc", padding: "1rem" }}>No results found.</p>
+      {/* Hiện No result nếu không có phim nào sau khi load */}
+      {movies.length === 0 && !isOverlayVisible && hasLoadedOnce && (
+        <p>No results found.</p>
       )}
 
-      {/* Hiển thị phim và overlay nếu đang tải */}
+      {/* Hiển thị phim kèm overlay nếu đang tải */}
       {movies.length > 0 && (
-        <MovieGrid title="" movies={movies} />
+        <>
+          {isOverlayVisible && (
+            <div className="loading-overlay">
+              <div className="spinner">Loading...</div>
+            </div>
+          )}
+          <MovieGrid title="" movies={movies} />
+        </>
       )}
     </div>
   )

@@ -76,7 +76,7 @@ const CountryDropdown = (): React.ReactElement => {
   useEffect(() => {
     if (!location.pathname.startsWith("/country")) return
     if (!isOpen) {
-      setSelectedCountries([])
+      setSelectedCountries([]) // ✅ Reset lựa chọn sau khi hiển thị kết quả
     }
   }, [location.pathname, isOpen])
 

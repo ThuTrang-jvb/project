@@ -3,8 +3,6 @@ import { useSearchParams } from "react-router-dom"
 import type { Country, Movie } from "../types/movie"
 import MovieGrid from "../components/MovieGrid"
 import "./GenrePage.css"
-import SkeletonMovieCard from "../components/SkeletonMovieCard"
-
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY
 const BASE_URL = import.meta.env.VITE_TMDB_BASE_URL
@@ -14,22 +12,9 @@ const CountryPage = (): React.ReactElement => {
   const countryCodes = searchParams.get("code")?.split(",") || []
 
   const [movies, setMovies] = useState<Movie[]>([])
-  const [pendingMovies, setPendingMovies] = useState<Movie[]>([])
-  const [moviesLoading, setMoviesLoading] = useState(false)
-  const [isOverlayVisible, setOverlayVisible] = useState(false)
-
+  const [moviesLoading, setMoviesLoading] = useState(true)
   const [countries, setCountries] = useState<Country[]>([])
   const [countriesLoading, setCountriesLoading] = useState(true)
-
-  // Overlay loading không bị chớp
-  useEffect(() => {
-    if (moviesLoading) {
-      setOverlayVisible(true)
-    } else {
-      const timeout = setTimeout(() => setOverlayVisible(false), 300)
-      return () => clearTimeout(timeout)
-    }
-  }, [moviesLoading])
 
   useEffect(() => {
     let cancelled = false
@@ -64,7 +49,7 @@ const CountryPage = (): React.ReactElement => {
       try {
         const results = await Promise.all(countryCodes.map(fetchMoviesByCountry))
         const merged = results.flat()
-        if (!cancelled) setPendingMovies(merged)
+        if (!cancelled) setMovies(merged)
       } finally {
         if (!cancelled) setMoviesLoading(false)
       }
@@ -72,7 +57,6 @@ const CountryPage = (): React.ReactElement => {
 
     if (countryCodes.length === 0) {
       setMovies([])
-      setPendingMovies([])
       setMoviesLoading(false)
       setCountriesLoading(false)
       return
@@ -86,13 +70,6 @@ const CountryPage = (): React.ReactElement => {
     }
   }, [countryCodes])
 
-  // Cập nhật phim sau khi tải xong 
-  useEffect(() => {
-    if (!moviesLoading) {
-      setMovies(pendingMovies)
-    }
-  }, [moviesLoading])
-
   const getTitle = () => {
     if (countryCodes.length === 0) return "No country selected"
     const matched = countries.filter((c) => countryCodes.includes(c.iso_3166_1))
@@ -105,27 +82,16 @@ const CountryPage = (): React.ReactElement => {
     }).join(", ")
   }
 
+  const isLoading = moviesLoading || countriesLoading
+
   return (
-    <div className="genre-movie-list" style={{ position: "relative", minHeight: "80vh" }}>
+    <div className="genre-movie-list">
       <h2>{getTitle()}</h2>
-
-      {/* Loading - chỉ hiển thị nếu chưa có phim */}
-      {isOverlayVisible && movies.length === 0 && (
-        <div className="movie-grid">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <SkeletonMovieCard key={i} />
-          ))}
-        </div>
-      )}
-
-
-      {/* Không có kết quả */}
-      {!isOverlayVisible && movies.length === 0 && (
-        <p style={{ color: "#ccc", padding: "1rem" }}>No results found.</p>
-      )}
-
-      {/* Hiển thị phim và overlay nếu đang tải */}
-      {movies.length > 0 && (
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : movies.length === 0 ? (
+        <p>No results found.</p>
+      ) : (
         <MovieGrid title="" movies={movies} />
       )}
     </div>
