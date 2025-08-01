@@ -3,7 +3,8 @@ import type { Movie, TMDBResponse, MovieDetails, Cast, Video, Genre } from "../t
 
 class MovieService {
   private async fetchFromAPI<T>(endpoint: string): Promise<T> {
-    const url = `${API_CONFIG.BASE_URL}${endpoint}?api_key=${API_CONFIG.API_KEY}`
+    const separator = endpoint.includes("?") ? "&" : "?"
+    const url = `${API_CONFIG.BASE_URL}${endpoint}${separator}api_key=${API_CONFIG.API_KEY}`
 
     try {
       const response = await fetch(url)
@@ -16,6 +17,7 @@ class MovieService {
       throw error
     }
   }
+
 
   async getTrendingMovies(): Promise<Movie[]> {
     const response = await this.fetchFromAPI<TMDBResponse<Movie>>("/trending/movie/week")

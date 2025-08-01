@@ -17,7 +17,7 @@ const Header = (): React.ReactElement => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsShrunk(window.scrollY > 50) 
+      setIsShrunk(window.scrollY > 50)
     }
 
     window.addEventListener("scroll", handleScroll)
@@ -25,7 +25,6 @@ const Header = (): React.ReactElement => {
   }, [])
 
   const handleSearch = async (query: string) => {
-    setSearchQuery(query)
     if (query.length > 2) {
       setIsSearching(true)
       try {
@@ -62,7 +61,16 @@ const Header = (): React.ReactElement => {
               placeholder="Search movies......."
               className="search-input"
               value={searchQuery}
-              onChange={(e) => handleSearch(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value
+                setSearchQuery(value)
+                handleSearch(value)
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch(searchQuery)
+                }
+              }}
             />
             {searchResults.length > 0 && (
               <div className="search-results">

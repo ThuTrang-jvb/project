@@ -21,7 +21,6 @@ const CountryPage = (): React.ReactElement => {
   const [countries, setCountries] = useState<Country[]>([])
   const [countriesLoading, setCountriesLoading] = useState(true)
 
-  // Overlay loading không bị chớp
   useEffect(() => {
     if (moviesLoading) {
       setOverlayVisible(true)
@@ -86,7 +85,6 @@ const CountryPage = (): React.ReactElement => {
     }
   }, [countryCodes])
 
-  // Cập nhật phim sau khi tải xong 
   useEffect(() => {
     if (!moviesLoading) {
       setMovies(pendingMovies)
@@ -108,8 +106,7 @@ const CountryPage = (): React.ReactElement => {
   return (
     <div className="genre-movie-list" style={{ position: "relative", minHeight: "80vh" }}>
       <h2>{getTitle()}</h2>
-
-      {/* Loading - chỉ hiển thị nếu chưa có phim */}
+  
       {isOverlayVisible && movies.length === 0 && (
         <div className="movie-grid">
           {Array.from({ length: 12 }).map((_, i) => (
@@ -118,13 +115,10 @@ const CountryPage = (): React.ReactElement => {
         </div>
       )}
 
-
-      {/* Không có kết quả */}
       {!isOverlayVisible && movies.length === 0 && (
         <p style={{ color: "#ccc", padding: "1rem" }}>No results found.</p>
       )}
 
-      {/* Hiển thị phim và overlay nếu đang tải */}
       {movies.length > 0 && (
         <MovieGrid title="" movies={movies} />
       )}

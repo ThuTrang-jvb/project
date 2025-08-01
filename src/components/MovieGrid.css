@@ -20,7 +20,16 @@
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1.5rem;
 }
+@media (max-width: 992px) {
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.25rem;
+  }
 
+  .section-title {
+    font-size: 1.75rem;
+  }
+}
 @media (max-width: 768px) {
   .container {
     padding: 0 1rem;

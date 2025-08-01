@@ -50,6 +50,7 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   line-height: 1.1;
 }
+
 .hero-navigation {
   position: absolute;
   top: 50%;
@@ -149,9 +150,28 @@
   transform: translateY(-2px);
 }
 
+@media (max-width: 992px) {
+  .hero-content {
+    left: 4rem;
+    right: 4rem;
+    bottom: 2rem;
+  }
+
+  .hero-title {
+    font-size: 3rem;
+  }
+
+  .hero-description {
+    font-size: 1.1rem;
+  }
+}
+
 @media (max-width: 768px) {
   .hero-content {
     padding: 0 1rem;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
   }
 
   .hero-title {
@@ -177,6 +197,7 @@
     justify-content: center;
   }
 }
+
 .hero-arrow {
   position: absolute;
   top: 50%;
@@ -201,5 +222,4 @@
 
 .hero-arrow.right {
   right: 20px;
-}
-
+} 
