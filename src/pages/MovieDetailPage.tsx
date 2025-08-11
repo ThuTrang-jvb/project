@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { useParams } from 'react-router-dom'
-import { Play, Plus, Share, Star, Clock, Calendar } from "lucide-react"
+import { Link, useParams } from 'react-router-dom'
+import { Play, Plus, Star, Clock, Calendar } from "lucide-react"
 import { movieService } from "../services/movieService"
 import { getImageUrl, formatDate, formatRuntime } from "../config/api"
 import type { MovieDetails, Cast, Movie } from "../types/movie"
@@ -44,7 +44,8 @@ const MovieDetail = (): React.ReactElement => {
     return (
       <div className="movie-detail">
         <div className="loading-container">
-          <div className="loading-spinner">Loading movie details...</div>
+          <div className="spinner"></div>
+          <p>Loading movie details...</p>
         </div>
       </div>
     )
@@ -69,7 +70,7 @@ const MovieDetail = (): React.ReactElement => {
           
         </div>
 
-        <div className="movie-content">
+        <div className="movie-content blurred-backdrop">
           <div className="movie-poster-section"> 
             <img
               src={getImageUrl(movie.poster_path) || "/placeholder.svg"}
@@ -125,10 +126,6 @@ const MovieDetail = (): React.ReactElement => {
                 <Plus size={20} />
                 Add to List
               </button>
-              <button className="btn btn-secondary">
-                <Share size={20} />
-                Share
-              </button>
             </div>
           </div>
         </div>
@@ -140,8 +137,15 @@ const MovieDetail = (): React.ReactElement => {
             <h2 className="section-title">More Like This</h2>
             <div className="related-grid">
               {similarMovies.map((relatedMovie) => (
-                <div key={relatedMovie.id} className="related-card">
-                  <img src={getImageUrl(relatedMovie.poster_path) || "/placeholder.svg"} alt={relatedMovie.title} />
+                <Link
+                  key={relatedMovie.id}
+                  to={`/movie/${relatedMovie.id}`}
+                  className="related-card"
+                >
+                  <img
+                    src={getImageUrl(relatedMovie.poster_path) || "/placeholder.svg"}
+                    alt={relatedMovie.title}
+                  />
                   <div className="related-info">
                     <h3>{relatedMovie.title}</h3>
                     <div className="related-rating">
@@ -149,7 +153,7 @@ const MovieDetail = (): React.ReactElement => {
                       {relatedMovie.vote_average.toFixed(1)}
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>

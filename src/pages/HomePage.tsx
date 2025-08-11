@@ -3,6 +3,7 @@ import Hero from "../components/Hero"
 import MovieGrid from "../components/MovieGrid"
 import { movieService } from "../services/movieService"
 import type { Movie } from "../types/movie"
+import "./HomePage.css" // nhớ import CSS nếu chưa có
 
 const HomePage = (): React.ReactElement => {
   const [trendingMovies, setTrendingMovies] = useState<Movie[]>([])
@@ -37,10 +38,9 @@ const HomePage = (): React.ReactElement => {
 
   if (loading) {
     return (
-      <div className="home-page">
-        <div className="loading-container">
-          <div className="loading-spinner">Loading movies...</div>
-        </div>
+      <div className="home-page loading-screen">
+        <div className="spinner"></div>
+        <p>Loading movies...</p>
       </div>
     )
   }

@@ -29,7 +29,6 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  flex: 1;
   flex-wrap: wrap;
 }
 
@@ -66,7 +65,6 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  flex: 1;
   flex-wrap: wrap;
   justify-content: flex-end;
 }

@@ -8,8 +8,8 @@
 }
 
 .search-input {
-  width: 100%;
-  padding: 10px 12px 10px 36px; /* Padding trái để chứa icon */
+  width: 400px;
+  padding: 10px 12px 10px 36px;
   border: 2px solid transparent;
   border-radius: 25px;
   background-color: white;
@@ -25,7 +25,6 @@
   background-color: white;
 }
 
-/* Icon tìm kiếm đặt cố định bên trái trong input */
 .search-icon {
   position: absolute;
   left: 12px;
@@ -43,7 +42,6 @@
   text-align: center;
 }
 
-/* Dropdown kết quả */
 .search-results {
   margin-top: 8px;
   width: 100%;

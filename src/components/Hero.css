@@ -122,6 +122,15 @@
   background-color: #e50914;
   color: white;
 }
+.hero-loading {
+  height: 100vh;
+  font-size: 2rem;
+  font-weight: bold;
+  background: linear-gradient(to right, #141e30, #243b55);
+  animation: pulse 2s infinite;
+  color: #ffffffcc;
+  margin: 0 auto;
+}
 
 .btn-primary:hover {
   background-color: #b8070f;

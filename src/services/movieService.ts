@@ -1,5 +1,5 @@
 import { API_CONFIG } from "../config/api"
-import type { Movie, TMDBResponse, MovieDetails, Cast, Video, Genre } from "../types/movie"
+import type { Movie, Series, TMDBResponse, MovieDetails, Cast, Video, Genre } from "../types/movie"
 
 class MovieService {
   private async fetchFromAPI<T>(endpoint: string): Promise<T> {
@@ -8,24 +8,26 @@ class MovieService {
 
     try {
       const response = await fetch(url)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
       return await response.json()
     } catch (error) {
       console.error("API fetch error:", error)
       throw error
     }
   }
-
+  async getAllMovies(page: number = 1): Promise<Movie[]> {
+    const endpoint = `/discover/movie?page=${page}&language=en-US`
+    const response = await this.fetchFromAPI<TMDBResponse<Movie>>(endpoint)
+    return response.results
+  }
 
   async getTrendingMovies(): Promise<Movie[]> {
     const response = await this.fetchFromAPI<TMDBResponse<Movie>>("/trending/movie/week")
     return response.results
   }
 
-  async getPopularMovies(): Promise<Movie[]> {
-    const response = await this.fetchFromAPI<TMDBResponse<Movie>>("/movie/popular")
+  async getPopularMovies(page = 1): Promise<Movie[]> {
+    const response = await this.fetchFromAPI<TMDBResponse<Movie>>(`/movie/popular?page=${page}`)
     return response.results
   }
 
@@ -33,15 +35,16 @@ class MovieService {
     const response = await this.fetchFromAPI<TMDBResponse<Movie>>("/movie/top_rated")
     return response.results
   }
+
   async getUpcomingMovies(): Promise<Movie[]> {
     const response = await this.fetchFromAPI<TMDBResponse<Movie>>("/movie/upcoming")
     return response.results
   }
+
   async getMoviesByGenre(genreId: number): Promise<Movie[]> {
     const response = await this.fetchFromAPI<TMDBResponse<Movie>>(`/discover/movie?with_genres=${genreId}`)
     return response.results
   }
-
 
   async getMovieDetails(movieId: number): Promise<MovieDetails> {
     return await this.fetchFromAPI<MovieDetails>(`/movie/${movieId}`)
@@ -68,7 +71,6 @@ class MovieService {
     return response.results
   }
 
-
   async getGenres(): Promise<Genre[]> {
     const response = await this.fetchFromAPI<{ genres: Genre[] }>("/genre/movie/list")
     return response.genres
@@ -76,6 +78,32 @@ class MovieService {
 
   async getNowPlayingMovies(): Promise<Movie[]> {
     const response = await this.fetchFromAPI<TMDBResponse<Movie>>("/movie/now_playing")
+    return response.results
+  }
+
+  async getAllSeries(page = 1): Promise<Series[]> {
+    const endpoint = `/discover/tv?page=${page}&language=en-US`
+    const response = await this.fetchFromAPI<TMDBResponse<Series>>(endpoint)
+    return response.results
+  }
+
+  async getSeriesDetails(seriesId: number): Promise<Series> {
+    return await this.fetchFromAPI<Series>(`/tv/${seriesId}`)
+  }
+
+  async getSeriesCast(seriesId: number): Promise<Cast[]> {
+    const response = await this.fetchFromAPI<{ cast: Cast[] }>(`/tv/${seriesId}/credits`)
+    return response.cast
+  }
+
+  async getSimilarSeries(seriesId: number): Promise<Series[]> {
+    const response = await this.fetchFromAPI<TMDBResponse<Series>>(`/tv/${seriesId}/similar`)
+    return response.results
+  }
+
+  async searchSeries(query: string): Promise<Series[]> {
+    const encodedQuery = encodeURIComponent(query)
+    const response = await this.fetchFromAPI<TMDBResponse<Series>>(`/search/tv?query=${encodedQuery}`)
     return response.results
   }
 }
