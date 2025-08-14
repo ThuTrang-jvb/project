@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
 import type { Country, Movie } from "../types/movie"
 import MovieGrid from "../components/MovieGrid"
-import "./GenrePage.css"
+import "./CountryPage.css"
 import SkeletonMovieCard from "../components/SkeletonMovieCard"
 
 

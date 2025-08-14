@@ -1,5 +1,5 @@
 import { API_CONFIG } from "../config/api"
-import type { Movie, Series, TMDBResponse, MovieDetails, Cast, Video, Genre } from "../types/movie"
+import type { Movie, Series, TMDBResponse, MovieDetails, Cast, Video, Genre, Actor, CombinedCredits } from "../types/movie"
 
 class MovieService {
   private async fetchFromAPI<T>(endpoint: string): Promise<T> {
@@ -104,6 +104,24 @@ class MovieService {
   async searchSeries(query: string): Promise<Series[]> {
     const encodedQuery = encodeURIComponent(query)
     const response = await this.fetchFromAPI<TMDBResponse<Series>>(`/search/tv?query=${encodedQuery}`)
+    return response.results
+  }
+  async getMoviesByActor(actorId: number, page: number = 1): Promise<Movie[]> {
+    const response = await this.fetchFromAPI<TMDBResponse<Movie>>(
+      `/discover/movie?with_cast=${actorId}&page=${page}`
+    );
+    return response.results;
+  }
+  async getActorDetails(id: number): Promise<Actor> {
+    return await this.fetchFromAPI<Actor>(`/person/${id}?language=en-US`);
+  }
+
+  async getActorCombinedCredits(id: number): Promise<CombinedCredits> {
+    return await this.fetchFromAPI<CombinedCredits>(`/person/${id}/combined_credits?language=en-US`);
+  }
+  async searchMulti(query: string) {
+    const encodedQuery = encodeURIComponent(query)
+    const response = await this.fetchFromAPI<{ results: any[] }>(`/search/multi?query=${encodedQuery}`)
     return response.results
   }
 }

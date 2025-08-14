@@ -1,0 +1,53 @@
+.actor-page {
+  padding: 100px 2rem;
+  color: #fff;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.actor-header {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.actor-image {
+  border-radius: 16px;
+  max-width: 280px;
+  width: 100%;
+  object-fit: cover;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.actor-info {
+  flex: 1;
+  min-width: 280px;
+}
+
+.actor-info h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.actor-info p {
+  margin: 0.25rem 0;
+  line-height: 1.5;
+}
+
+.actor-info strong {
+  color: #ffcc70;
+}
+
+.movie-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.2rem;
+}
+
+h2 {
+  margin-top: 2rem;
+  font-size: 1.5rem;
+}

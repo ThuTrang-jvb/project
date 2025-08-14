@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from "react"
+"use client"
+
+import type React from "react"
+import { useEffect, useState, useMemo } from "react"
 import { useSearchParams } from "react-router-dom"
 import type { Movie, Genre } from "../types/movie"
 import MovieGrid from "../components/MovieGrid"
@@ -10,19 +13,24 @@ const BASE_URL = import.meta.env.VITE_TMDB_BASE_URL
 
 const GenrePage = (): React.ReactElement => {
   const [searchParams] = useSearchParams()
-  const genreIds = searchParams.get("ids")?.split(",") || []
+  const genreIds = useMemo(() => {
+    return searchParams.get("ids")?.split(",") || []
+  }, [searchParams])
+
   const [movies, setMovies] = useState<Movie[]>([])
-  const [pendingMovies, setPendingMovies] = useState<Movie[]>([])
   const [loading, setLoading] = useState(true)
   const [isOverlayVisible, setOverlayVisible] = useState(false)
   const [genresMap, setGenresMap] = useState<Record<string, string>>({})
 
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout
     if (loading) {
       setOverlayVisible(true)
     } else {
-      const timeout = setTimeout(() => setOverlayVisible(false), 300)
-      return () => clearTimeout(timeout)
+      timeoutId = setTimeout(() => setOverlayVisible(false), 300)
+    }
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId)
     }
   }, [loading])
 
@@ -49,14 +57,12 @@ const GenrePage = (): React.ReactElement => {
       try {
         setLoading(true)
         const genreParam = genreIds.join(",")
-        const res = await fetch(
-          `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreParam}`
-        )
+        const res = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreParam}`)
         const data = await res.json()
-        setPendingMovies(data.results || [])
+        setMovies(data.results || [])
       } catch (error) {
         console.error("Failed to load genre movies:", error)
-        setPendingMovies([])
+        setMovies([])
       } finally {
         setLoading(false)
       }
@@ -66,18 +72,13 @@ const GenrePage = (): React.ReactElement => {
       fetchMoviesByGenre()
     } else {
       setMovies([])
-      setPendingMovies([])
       setLoading(false)
     }
   }, [genreIds])
 
-  useEffect(() => {
-    if (!loading) {
-      setMovies(pendingMovies)
-    }
-  }, [loading])
-
-  const genreNames = genreIds.map((id) => genresMap[id]).filter((name) => name)
+  const genreNames = useMemo(() => {
+    return genreIds.map((id) => genresMap[id]).filter((name) => name)
+  }, [genreIds, genresMap])
 
   return (
     <div className="genre-movie-list full-height">
@@ -91,13 +92,9 @@ const GenrePage = (): React.ReactElement => {
         </div>
       )}
 
-      {!isOverlayVisible && movies.length === 0 && (
-        <p className="no-results-text">No results found.</p>
-      )}
+      {!isOverlayVisible && movies.length === 0 && <p className="no-results-text">No results found.</p>}
 
-      {movies.length > 0 && (
-        <MovieGrid title="" movies={movies} />
-      )}
+      {movies.length > 0 && <MovieGrid title="" movies={movies} />}
     </div>
   )
 }

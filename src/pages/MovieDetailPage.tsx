@@ -6,6 +6,7 @@ import { getImageUrl, formatDate, formatRuntime } from "../config/api"
 import type { MovieDetails, Cast, Movie } from "../types/movie"
 import "./MovieDetail.css"
 
+
 const MovieDetail = (): React.ReactElement => {
   const { id } = useParams<{ id: string }>()
   const [movie, setMovie] = useState<MovieDetails | null>(null)

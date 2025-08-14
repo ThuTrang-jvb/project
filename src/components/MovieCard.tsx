@@ -30,26 +30,23 @@ const MovieCard = ({ movie }: MovieCardProps): React.ReactElement => {
           }}
         />
 
-        <div className={`movie-overlay ${isHovered ? "visible" : ""}`}>
-          <div className="movie-actions">
-            <button className="action-btn play-btn" onClick={(e) => e.stopPropagation()}>
-              <Play size={16} fill="currentColor" />
-            </button>
-            <button className="action-btn add-btn" onClick={(e) => e.stopPropagation()}>
-              <Plus size={16} />
-            </button>
-          </div>
-          <div className="movie-info">
-            <h3 className="movie-title">{movie.title}</h3>
-            <div className="movie-meta">
-              <span className="rating">
-                <Star size={12} fill="currentColor" />
-                {movie.vote_average.toFixed(1)}
-              </span>
-              <span className="year">{formatDate(movie.release_date)}</span>
-            </div>
-          </div>
+        <div className="movie-overlay">
+          <button className="action-btn play-btn" onClick={(e) => e.stopPropagation()}>
+            <Play size={16} fill="currentColor" />
+          </button>
+          <button className="action-btn add-btn" onClick={(e) => e.stopPropagation()}>
+            <Plus size={16} />
+          </button>
         </div>
+      </div>
+      <div className="movie-info">
+        <h3 className="movie-title">{movie.title}</h3>
+        <p className="year">{movie.release_date}</p>
+        <p className="rating">
+          <Star size={12} fill="currentColor" />
+          {movie.vote_average.toFixed(2)}
+        </p>
+        
       </div>
     </div>
   )

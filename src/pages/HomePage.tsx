@@ -3,7 +3,7 @@ import Hero from "../components/Hero"
 import MovieGrid from "../components/MovieGrid"
 import { movieService } from "../services/movieService"
 import type { Movie } from "../types/movie"
-import "./HomePage.css" // nhớ import CSS nếu chưa có
+import "./HomePage.css" 
 
 const HomePage = (): React.ReactElement => {
   const [trendingMovies, setTrendingMovies] = useState<Movie[]>([])

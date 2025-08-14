@@ -2,12 +2,11 @@ import { useState, useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Search } from "lucide-react"
 import { movieService } from "../services/movieService"
-import type { Movie } from "../types/movie"
 import "./SearchBar.css"
 
 const SearchBar = (): React.ReactElement => {
   const [searchQuery, setSearchQuery] = useState("")
-  const [searchResults, setSearchResults] = useState<Movie[]>([])
+  const [searchResults, setSearchResults] = useState<any[]>([])
   const [isSearching, setIsSearching] = useState(false)
 
   const navigate = useNavigate()
@@ -18,7 +17,7 @@ const SearchBar = (): React.ReactElement => {
     if (query.length > 2) {
       setIsSearching(true)
       try {
-        const results = await movieService.searchMovies(query)
+        const results = await movieService.searchMulti(query)
         setSearchResults(results.slice(0, 5))
       } catch (error) {
         console.error("Search error:", error)
@@ -44,7 +43,6 @@ const SearchBar = (): React.ReactElement => {
         setSearchResults([])
       }
     }
-
     document.addEventListener("mousedown", handleClickOutside)
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
@@ -55,7 +53,7 @@ const SearchBar = (): React.ReactElement => {
     <div className="search-container" ref={searchRef}>
       <input
         type="text"
-        placeholder="Search movies..."
+        placeholder="Search movies, series, actors..."
         className="search-input"
         value={searchQuery}
         onChange={(e) => handleSearch(e.target.value)}
@@ -65,24 +63,36 @@ const SearchBar = (): React.ReactElement => {
       {isSearching && <div className="search-loading">Searching...</div>}
       {searchResults.length > 0 && (
         <div className="search-results">
-          {searchResults.map((movie) => (
+          {searchResults.map((item) => (
             <div
-              key={movie.id}
+              key={`${item.media_type}-${item.id}`}
               className="search-result-item"
               onClick={() => {
-                navigate(`/movie/${movie.id}`)
+                if (item.media_type === "movie") navigate(`/movie/${item.id}`)
+                else if (item.media_type === "tv") navigate(`/series/${item.id}`)
+                else if (item.media_type === "person") navigate(`/actor/${item.id}`)
                 setSearchResults([]) 
               }}
               style={{ cursor: "pointer" }}
             >
               <img
-                src={movie.poster_path ? `https://image.tmdb.org/t/p/w92${movie.poster_path}` : "/placeholder.svg"}
-                alt={movie.title}
+                src={
+                  item.poster_path || item.profile_path
+                    ? `https://image.tmdb.org/t/p/w92${item.poster_path || item.profile_path}`
+                    : "/placeholder.svg"
+                }
+                alt={item.title || item.name}
                 className="search-result-poster"
               />
               <div className="search-result-info">
-                <h4>{movie.title}</h4>
-                <span>{new Date(movie.release_date).getFullYear()}</span>
+                <h4>{item.title || item.name}</h4>
+                {item.media_type === "movie" && item.release_date && (
+                  <span>{new Date(item.release_date).getFullYear()}</span>
+                )}
+                {item.media_type === "tv" && item.first_air_date && (
+                  <span>{new Date(item.first_air_date).getFullYear()}</span>
+                )}
+                {item.media_type === "person" && <span>Actor</span>}
               </div>
             </div>
           ))}

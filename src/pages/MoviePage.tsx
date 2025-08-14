@@ -11,7 +11,7 @@ const MoviePage = (): React.ReactElement => {
   const [hasMore, setHasMore] = useState(true)
 
   useEffect(() => {
-    fetchMovies(1) // load page đầu tiên
+    fetchMovies(1) 
   }, [])
 
   const fetchMovies = async (pageToLoad: number) => {
@@ -22,12 +22,10 @@ const MoviePage = (): React.ReactElement => {
       const data = await movieService.getAllMovies(pageToLoad)
       const safeData: Movie[] = Array.isArray(data) ? data : []
 
-      // Nếu trả về ít hơn 20 phim thì nghĩa là hết dữ liệu
       if (safeData.length < 20) {
         setHasMore(false)
       }
 
-      // Loại bỏ trùng ID
       setMovies(prevMovies => {
         const combined = [...prevMovies, ...safeData]
         return combined.filter(

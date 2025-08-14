@@ -50,6 +50,8 @@
   text-decoration: none;
   position: relative;
   display: inline-block;
+  background: transparent;
+  border: none;
 }
 
 .header-icon:hover {
@@ -87,6 +89,22 @@
   border: none;
   color: white;
   cursor: pointer;
+}
+.nav-button {
+  background: none;
+  border: none;
+  color: white;
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: clamp(12px, 1.5vw, 16px);
+  padding: 4px 8px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.nav-button:hover {
+  color: #1e90ff;
+  transition: color 0.3s ease;
 }
 
 

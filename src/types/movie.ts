@@ -104,9 +104,50 @@ export interface MovieCardProps {
 export interface MovieGridProps {
   title: string
   movies: (Movie |Series )[]
+  layout?: "grid" | "horizontal";
 }
 export interface Country {
   iso_3166_1: string
   english_name: string
   native_name: string
 }
+export interface KnownFor {
+  id: number;
+  title?: string;
+  name?: string;
+  media_type: "movie" | "tv";
+  poster_path?: string | null;
+  overview?: string;
+  release_date?: string;
+  first_air_date?: string;
+}
+
+export interface Actor {
+  id: number;
+  name: string;
+  profile_path?: string | null;
+  known_for: KnownFor[];       
+  popularity: number;
+  gender?: number;
+  known_for_department: string;
+  also_known_as?: string[];
+  biography?: string;
+  birthday?: string;
+  place_of_birth?: string;
+}
+export interface CreditItem {
+  id: number;
+  title?: string;
+  name?: string;
+  poster_path?: string | null;
+  character?: string;
+  release_date?: string;
+}
+
+export interface CombinedCredits {
+  cast: CreditItem[];
+  crew: CreditItem[];
+}
+
+
+

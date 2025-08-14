@@ -17,7 +17,6 @@ const SeriesPage = (): React.ReactElement => {
 
       setSeriesList(prev => {
         const merged = [...prev, ...newSeries];
-        // Lọc trùng theo id
         return merged.filter(
           (item, index, self) => index === self.findIndex(s => s.id === item.id)
         );
