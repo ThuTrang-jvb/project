@@ -1,55 +1,73 @@
-import React, { useState } from "react"
-import { Play, Plus, Star } from "lucide-react"
-import { useNavigate } from "react-router-dom"
-import { getImageUrl, formatDate } from "../config/api"
-import type { MovieCardProps } from "../types/movie"
-import "./MovieCard.css"
+import React, { useState } from "react";
+import { Play, Plus, Star } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { getImageUrl } from "../config/api";
+import type { Movie } from "../types/movie";
+import TrailerModal from "./TrailerModal";
+import "./MovieCard.css";
 
-const MovieCard = ({ movie }: MovieCardProps): React.ReactElement => {
-  const [isHovered, setIsHovered] = useState<boolean>(false)
-  const navigate = useNavigate()
-
-  const handleClick = (): void => {
-    navigate(`/movie/${movie.id}`)
-  }
-
-  return (
-    <div
-      className="movie-card"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onClick={handleClick}
-    >
-      <div className="movie-poster">
-        <img
-          src={getImageUrl(movie.poster_path)}
-          alt={movie.title}
-          className="poster-image"
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = "https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-4c38c8f20c3a2a2524cba6be144df78e13bc4c98a497f78f9345025c8f93b68b.svg"
-          }}
-        />
-
-        <div className="movie-overlay">
-          <button className="action-btn play-btn" onClick={(e) => e.stopPropagation()}>
-            <Play size={16} fill="currentColor" />
-          </button>
-          <button className="action-btn add-btn" onClick={(e) => e.stopPropagation()}>
-            <Plus size={16} />
-          </button>
-        </div>
-      </div>
-      <div className="movie-info">
-        <h3 className="movie-title">{movie.title}</h3>
-        <p className="year">{movie.release_date}</p>
-        <p className="rating">
-          <Star size={12} fill="currentColor" />
-          {movie.vote_average.toFixed(2)}
-        </p>
-        
-      </div>
-    </div>
-  )
+interface MovieCardProps {
+  movie: Movie;
+  type?: "movie" | "tv"; // mặc định là movie
 }
 
-export default MovieCard
+const MovieCard = ({ movie, type = "movie" }: MovieCardProps): React.ReactElement => {
+  const navigate = useNavigate();
+  const [showTrailer, setShowTrailer] = useState(false);
+
+  const handleCardClick = () => {
+    navigate(`/${type}/${movie.id}`);
+  };
+
+  const handleActionClick = (e: React.MouseEvent, action: string) => {
+    e.stopPropagation();
+    if (action === "play") {
+      setShowTrailer(true);
+    } else if (action === "add") {
+      console.log(`Added ${movie.title} to list`);
+    }
+  };
+
+  return (
+    <>
+      <div className="movie-card" onClick={handleCardClick}>
+        <div className="movie-poster">
+          <img
+            src={getImageUrl(movie.poster_path)}
+            alt={movie.title}
+            className="poster-image"
+          />
+          <div className="movie-overlay">
+            <button
+              className="action-btn play-btn"
+              onClick={(e) => handleActionClick(e, "play")}
+            >
+              <Play size={20} fill="currentColor" />
+            </button>
+            <button
+              className="action-btn add-btn"
+              onClick={(e) => handleActionClick(e, "add")}
+            >
+              <Plus size={20} />
+            </button>
+          </div>
+        </div>
+
+        <div className="movie-info">
+          <h3 className="movie-title">{movie.title}</h3>
+          <p className="movie-date">{movie.release_date}</p>
+          <p className="movie-rating">
+            <Star size={12} fill="currentColor" />{" "}
+            {movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}
+          </p>
+        </div>
+      </div>
+
+      {showTrailer && (
+        <TrailerModal id={movie.id} type={type} onClose={() => setShowTrailer(false)} />
+      )}
+    </>
+  );
+};
+
+export default MovieCard;

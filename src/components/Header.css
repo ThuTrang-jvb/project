@@ -9,19 +9,19 @@
 
 .header-container {
   max-width: 1400px;
-  width: 100%;             
+  width: 100%;
   margin: 0 auto;
-  padding: 20px 4rem;      
+  padding: 20px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
+  align-items: center; /* ✅ Canh giữa theo chiều dọc */
+  flex-wrap: nowrap; /* ✅ Đảm bảo hàng ngang ở màn hình lớn */
 }
 
 .header.shrink {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  background-color: rgba(26, 26, 26, 0.5); 
-  backdrop-filter: blur(10px); 
+  background-color: rgba(26, 26, 26, 0.5);
+  backdrop-filter: blur(10px);
   transition: all 0.3s ease;
 }
 
@@ -29,49 +29,43 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  flex-wrap: wrap;
+}
+
+.header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .nav {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
+  align-items: center; /* ✅ Thêm để icon + text thẳng hàng */
 }
 
-.nav-link {
+.nav-link,
+.nav-button {
   font-family: Poppins;
   font-weight: 600;
-  font-style: SemiBold;
   font-size: clamp(12px, 1.5vw, 16px);
   padding: 4px 8px;
   line-height: 100%;
-  letter-spacing: 0%;
   color: white;
   text-decoration: none;
   position: relative;
-  display: inline-block;
+  display: inline-flex; /* ✅ Giúp icon + text ngang hàng */
+  align-items: center; /* ✅ Giúp icon thẳng hàng */
   background: transparent;
   border: none;
+  cursor: pointer;
 }
 
-.header-icon:hover {
-  color: #1e90ff;
-}
-
-.nav-link:hover {
+.nav-link:hover,
+.nav-button:hover {
   color: #1e90ff;
   transition: color 0.3s ease;
 }
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
-
-
 
 .header-icon {
   color: white;
@@ -79,8 +73,8 @@
   transition: color 0.3s ease;
 }
 
-.profile {
-  cursor: pointer;
+.header-icon:hover {
+  color: #1e90ff;
 }
 
 .menu-toggle {
@@ -90,48 +84,43 @@
   color: white;
   cursor: pointer;
 }
-.nav-button {
-  background: none;
-  border: none;
-  color: white;
-  font-family: Poppins;
-  font-weight: 600;
-  font-size: clamp(12px, 1.5vw, 16px);
-  padding: 4px 8px;
-  cursor: pointer;
-  text-decoration: none;
-}
 
-.nav-button:hover {
-  color: #1e90ff;
+.search-wrapper {
+  max-width: 400px;
+  width: 100%;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+  font-size: 1.25rem;
   transition: color 0.3s ease;
 }
 
+.logo:hover {
+  color: #1e90ff;
+}
 
+.logo-icon {
+  color: #1e90ff;
+}
+
+.logo-text {
+  font-family: "Poppins", sans-serif;
+  letter-spacing: -0.5px;
+}
 @media (max-width: 992px) {
   .header-container {
     flex-direction: column;
-    align-items: stretch; 
-
-    padding: 1rem 3rem;
-  }
-  .header.menu-open .search-wrapper {
-    display: none;
+    align-items: stretch;
   }
 
   .menu-toggle {
     display: block;
     margin-left: auto;
-  }
-
-  .header-left,
-  .header-right,
-  .header-center {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
   }
 
   .nav {
@@ -149,34 +138,29 @@
     display: flex;
   }
 
-  .nav-link {
+  .nav-link,
+  .nav-button {
     font-size: 14px;
     padding: 2px 6px;
-  }
-
-  .header-left,
-  .header-right {
-    gap: 0.75rem;
+    text-align: left;
   }
 
   .header-icon {
     display: none;
   }
-  
+
+  .header.shrink {
+    padding: 10px 2rem;
+  }
+  .logo-text {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {
-  .nav-link {
+  .nav-link,
+  .nav-button {
     font-size: 12px;
     padding: 2px 4px;
-  }
-
-  .header-left,
-  .header-right {
-    gap: 0.5rem;
-  }
-
-  .header-icon {
-    font-size: 12px;
   }
 }

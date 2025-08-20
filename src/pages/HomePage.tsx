@@ -48,10 +48,18 @@ const HomePage = (): React.ReactElement => {
   return (
     <div className="home-page">
       <Hero />
-      {trendingMovies.length > 0 && <MovieGrid title="Trending Now" movies={trendingMovies} />}
-      {popularMovies.length > 0 && <MovieGrid title="Popular Movies" movies={popularMovies} />}
-      {topRatedMovies.length > 0 && <MovieGrid title="Top Rated" movies={topRatedMovies} />}
-      {upcomingMovies.length > 0 && <MovieGrid title="Coming Soon" movies={upcomingMovies} />}
+      {trendingMovies.length > 0 && (
+        <MovieGrid title="Trending Now" movies={trendingMovies} layout="scroll" />
+      )}
+      {popularMovies.length > 0 && (
+        <MovieGrid title="Popular Movies" movies={popularMovies} layout="scroll" />
+      )}
+      {topRatedMovies.length > 0 && (
+        <MovieGrid title="Top Rated" movies={topRatedMovies} layout="scroll" />
+      )}
+      {upcomingMovies.length > 0 && (
+        <MovieGrid title="Coming Soon" movies={upcomingMovies} layout="scroll" />
+      )}
     </div>
   )
 }

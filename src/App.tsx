@@ -9,7 +9,9 @@ import SearchPage from "./pages/SearchPage"
 import MoviePage from "./pages/MoviePage"
 import SeriesPage from "./pages/SeriesPage"
 import SeriesDetailPage from "./pages/SeriesDetailPage"
+import Footer from "./components/Footer"
 import ActorPage from "./pages/ActorPage"
+
 import "./App.css"
 
 function App(): React.ReactElement {
@@ -30,6 +32,7 @@ function App(): React.ReactElement {
           <Route path="/actor/:id" element={<ActorPage />} />
         </Routes>
       </div>
+      <Footer />
     </div>
   )
 }

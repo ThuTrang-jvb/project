@@ -149,6 +149,7 @@ const MovieDetail = (): React.ReactElement => {
                   />
                   <div className="related-info">
                     <h3>{relatedMovie.title}</h3>
+                    <p className="movie-date">{movie.release_date}</p>
                     <div className="related-rating">
                       <Star size={12} fill="currentColor" />
                       {relatedMovie.vote_average.toFixed(1)}

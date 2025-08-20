@@ -21,12 +21,15 @@ const ActorDropdown: React.FC<ActorDropdownProps> = () => {
     try {
       const promises = [1, 2, 3].map((page) =>
         fetch(`https://api.themoviedb.org/3/person/popular?api_key=${API_KEY}&language=en-US&page=${page}`).then(
-          (res) => res.json(),
-        ),
+          (res) => res.json()
+        )
       )
 
       const results = await Promise.all(promises)
-      const allActors = results.flatMap((data) => data.results || [])
+      const allActors = results
+        .flatMap((data) => data.results || [])
+        .filter((actor, index, self) => index === self.findIndex((a) => a.id === actor.id))
+
       setActors(allActors.slice(0, 50))
     } catch (err) {
       console.error("Error fetching popular actors:", err)
@@ -35,7 +38,6 @@ const ActorDropdown: React.FC<ActorDropdownProps> = () => {
       setLoading(false)
     }
   }
-
   const handleSelect = (actor: Actor) => {
     setIsOpen(false)
     navigate(`/actor/${actor.id}`)

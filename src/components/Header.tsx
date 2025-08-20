@@ -1,11 +1,14 @@
+"use client"
+
+import type React from "react"
 import { useEffect, useState } from "react"
 import { useLocation, Link } from "react-router-dom"
-import { Bell, Menu } from "lucide-react"
-import GenreDropdown from "../components/GenreDropdown"
-import Country from "../components/CountryDropDown"
-import SearchBar from "../components/SearchBar"
-import LoginModal from "../components/LoginModal"
-
+import { Menu, Clock, Film } from "lucide-react"
+import GenreDropdown from "./GenreDropdown"
+import CountryDropdown from "./CountryDropDown"
+import SearchBar from "./SearchBar"
+import LoginModal from "./LoginModal"
+import ActorDropdown from "./ActorDropDown"
 import "./Header.css"
 
 const Header = (): React.ReactElement => {
@@ -18,7 +21,6 @@ const Header = (): React.ReactElement => {
     const handleScroll = () => {
       setIsShrunk(window.scrollY > 50)
     }
-
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
@@ -27,49 +29,48 @@ const Header = (): React.ReactElement => {
 
   return (
     <>
-      <header className={`header ${isShrunk ? "shrink" : ""} ${isMenuOpen ? "menu-open" : ""}`}>
+      <header className={`header ${isShrunk ? "shrink" : ""}`}>
         <div className="header-container">
           <div className="header-left">
-            <nav className={`nav ${isMenuOpen ? "nav-open" : ""}`}>
-              <a href="/" className={`nav-link ${isActive("/") ? "active" : ""}`}>Home</a>
-              <GenreDropdown />
-              <Country />
-              <Link to="/movies/single" className={`nav-link ${isActive("/movies/single") ? "active" : ""}`}>
-                Movie
-              </Link>
-              <Link to="/series" className={`nav-link ${isActive("/movies/single") ? "active" : ""}`}>
-                Series
-              </Link>
-              <a href="/animation" className={`nav-link ${isActive("/animation") ? "active" : ""}`}>Actor</a>
-            </nav>
+            <Link to="/" className="logo">
+              <Film size={28} className="logo-icon" />
+              <span className="logo-text">CinemaFlix</span>
+            </Link>
+            <button className="menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              <Menu size={24} />
+            </button>
           </div>
 
           <div className="header-center">
             <div className="search-wrapper">
               <SearchBar />
             </div>
-            <button className="menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              <Menu size={24} />
+          </div>
+
+          <nav className={`nav ${isMenuOpen ? "nav-open" : ""}`}>
+            <Link to="/" className={`nav-link ${isActive("/") ? "active" : ""}`}>
+              Home
+            </Link>
+            <GenreDropdown />
+            <CountryDropdown />
+            <Link to="/movies" className={`nav-link ${isActive("/movies") ? "active" : ""}`}>
+              Movie
+            </Link>
+            <Link to="/series" className={`nav-link ${isActive("/series") ? "active" : ""}`}>
+              Series
+            </Link>
+            <ActorDropdown />
+            <Link to="/history" className={`nav-link ${isActive("/history") ? "active" : ""}`}>
+              <Clock size={12} style={{ marginRight: "4px" }} />
+              History
+            </Link>
+            <button type="button" className="nav-button" onClick={() => setIsLoginOpen(true)}>
+              Login/Signup
             </button>
-          </div>
-
-          <div className="header-right">
-            <Bell className="header-icon" size={12} />
-          </div>
-
-          <div>
-            <nav className={`nav ${isMenuOpen ? "nav-open" : ""}`}>
-              <button
-                type="button"
-                className={`nav-link ${isActive("/login") ? "active" : ""}`}
-                onClick={() => setIsLoginOpen(true)}
-              >
-                Login/Signup
-              </button>
-            </nav>
-          </div>
+          </nav>
         </div>
       </header>
+
       <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
     </>
   )
