@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react"
-import { Link, useParams } from 'react-router-dom'
-import { Play, Plus, Star, Calendar } from "lucide-react"
+import { Link, useParams } from "react-router-dom"
+import { Play, Heart, Star, Calendar } from "lucide-react"
 import { movieService } from "../services/movieService"
 import { getImageUrl, formatDate } from "../config/api"
 import type { Series, Cast } from "../types/movie"
+import TrailerModal from "../components/TrailerModal"
+import { useFavorites } from "../context/FavoritesContext"
 import "./SeriesDetailPage.css"
 
 const SeriesDetailPage = (): React.ReactElement => {
@@ -12,6 +14,9 @@ const SeriesDetailPage = (): React.ReactElement => {
   const [cast, setCast] = useState<Cast[]>([])
   const [similarSeries, setSimilarSeries] = useState<Series[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+  const [showTrailer, setShowTrailer] = useState(false)
+  const { favorites, toggleFavorite } = useFavorites()
+  const isFavorite = series ? favorites.includes(series.id) : false
 
   useEffect(() => {
     const fetchSeriesData = async (): Promise<void> => {
@@ -90,16 +95,6 @@ const SeriesDetailPage = (): React.ReactElement => {
               </div>
             </div>
 
-            {series.genre_ids && (
-              <div className="series-genres">
-                {series.genre_ids.map((genreId) => (
-                  <span key={genreId} className="genre-tag">
-                    {genreId}
-                  </span>
-                ))}
-              </div>
-            )}
-
             <p className="series-description">{series.overview}</p>
 
             {cast.length > 0 && (
@@ -111,13 +106,17 @@ const SeriesDetailPage = (): React.ReactElement => {
             )}
 
             <div className="series-actions">
-              <button className="btn btn-primary">
+              <button className="btn btn-primary" onClick={() => setShowTrailer(true)}>
                 <Play size={20} fill="currentColor" />
                 Watch Now
               </button>
-              <button className="btn btn-secondary">
-                <Plus size={20} />
-                Add to List
+
+              <button
+                className={`btn btn-heart favorite-btn ${isFavorite ? "active" : ""}`}
+                onClick={() => toggleFavorite(series.id)}
+              >
+                <Heart size={20} fill={isFavorite ? "red" : "none"} />
+                {isFavorite ? "Added" : "Add to List"}
               </button>
             </div>
           </div>
@@ -151,6 +150,14 @@ const SeriesDetailPage = (): React.ReactElement => {
             </div>
           </div>
         </div>
+      )}
+
+      {showTrailer && (
+        <TrailerModal
+          id={series.id}
+          type="tv"
+          onClose={() => setShowTrailer(false)}
+        />
       )}
     </div>
   )

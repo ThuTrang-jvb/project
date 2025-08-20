@@ -60,6 +60,22 @@
   margin-bottom: 1rem;
   line-height: 1.1;
 }
+.favorite-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #2c2c2c;
+  color: #fff;
+  border: 1px solid #444;
+  transition: all 0.3s ease;
+}
+
+
+.favorite-btn.active {
+  background-color: white; 
+  color: black;
+  border-color: crimson;
+}
 
 .movie-meta {
   display: flex;
@@ -150,27 +166,31 @@
   transform: translateY(-2px);
 }
 
-.btn-secondary {
-  background-color: rgba(255, 255, 255, 0.1);
+.btn-heart {
+  background-color: rgba(255, 255, 255, 0.2);
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
 }
 
-.btn-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+.btn-heart:hover {
+  background-color: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
 }
+
+.btn-heart.active {
+  color: #e50914;
+  background-color: rgba(229, 9, 20, 0.2);
+  border-color: #e50914;
+}
+
+
 
 .related-section {
   padding: 4rem 0;
   background: rgba(0, 0, 0, 0.5);
 }
 
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
 
 .section-title {
   font-size: 2rem;
@@ -190,10 +210,12 @@
   transition: transform 0.3s ease;
   border-radius: 8px;
   overflow: hidden;
+  text-decoration: none;
 }
 
 .related-card:hover {
   transform: scale(1.05);
+  text-decoration: none;
 }
 
 .related-card img {
@@ -211,6 +233,12 @@
   font-size: 1rem;
   margin-bottom: 0.5rem;
   color: white;
+  white-space: nowrap;       
+  overflow: hidden;         
+  text-overflow: ellipsis;   
+  max-width: 100%;           
+  display: block;
+  text-decoration: none;
 }
 
 .related-rating {

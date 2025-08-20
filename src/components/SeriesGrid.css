@@ -2,16 +2,6 @@
   margin-top: 3rem;
   margin-bottom: 3rem;
 }
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1.5rem;
-  box-sizing: border-box;
-  color: #ffffff;
-  font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
-
 .section-title {
   font-weight: 700;
   margin-bottom: 1rem;

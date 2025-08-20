@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Play, Plus, Star } from "lucide-react";
+import { Play, Heart, Star } from "lucide-react";  
 import { useNavigate } from "react-router-dom";
 import type { Series } from "../types/movie";
 import TrailerModal from "./TrailerModal";
+import { useFavorites } from "../context/FavoritesContext";  
 import "./SeriesCard.css";
 
 interface SeriesCardProps {
@@ -12,6 +13,8 @@ interface SeriesCardProps {
 const SeriesCard = ({ series }: SeriesCardProps): React.ReactElement => {
   const navigate = useNavigate();
   const [isTrailerOpen, setIsTrailerOpen] = useState(false);
+  const { favorites, toggleFavorite } = useFavorites();
+  const isFavorite = favorites.includes(series.id);
 
   const handleCardClick = () => {
     navigate(`/series/${series.id}`);
@@ -21,9 +24,9 @@ const SeriesCard = ({ series }: SeriesCardProps): React.ReactElement => {
     e.stopPropagation();
 
     if (action === "play") {
-      setIsTrailerOpen(true); 
-    } else if (action === "add") {
-      console.log(`Added ${series.name} to list`);
+      setIsTrailerOpen(true);
+    } else if (action === "favorite") {
+      toggleFavorite(series.id);
     }
   };
 
@@ -49,10 +52,14 @@ const SeriesCard = ({ series }: SeriesCardProps): React.ReactElement => {
               <Play size={20} fill="currentColor" />
             </button>
             <button
-              className="action-btn add-btn"
-              onClick={(e) => handleActionClick(e, "add")}
+              className={`action-btn heart-btn ${isFavorite ? "active" : ""}`}
+              onClick={(e) => handleActionClick(e, "favorite")}
             >
-              <Plus size={20} />
+              <Heart
+                size={20}
+                fill={isFavorite ? "red" : "none"}
+                color={isFavorite ? "red" : "white"}
+              />
             </button>
           </div>
         </div>

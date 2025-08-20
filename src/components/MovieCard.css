@@ -108,6 +108,12 @@
   align-items: center;
   gap: 4px;
 }
+.add-btn.active svg {
+  color: red;
+  transform: scale(1.2);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
 
 @media (max-width: 420px) {
   .movie-title {

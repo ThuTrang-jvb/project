@@ -11,7 +11,7 @@ import SeriesPage from "./pages/SeriesPage"
 import SeriesDetailPage from "./pages/SeriesDetailPage"
 import Footer from "./components/Footer"
 import ActorPage from "./pages/ActorPage"
-
+import MyListPage from "./pages/MyListPage"
 import "./App.css"
 
 function App(): React.ReactElement {
@@ -30,6 +30,8 @@ function App(): React.ReactElement {
           <Route path="/series" element={<SeriesPage />} />
           <Route path="/series/:id" element={<SeriesDetailPage />} />
           <Route path="/actor/:id" element={<ActorPage />} />
+          <Route path="/my-list" element={<MyListPage />} />
+
         </Routes>
       </div>
       <Footer />

@@ -1,15 +1,9 @@
 import React, { useRef } from "react"
 import MovieCard from "./MovieCard"
 import SkeletonMovieCard from "./SkeletonMovieCard"
-import type { Movie } from "../types/movie"
+import type { MovieGridProps } from "../types/movie"   
 import "./MovieGrid.css"
-
-interface MovieGridProps {
-  title: string
-  movies: Movie[]
-  layout?: "scroll" | "grid"
-  loading?: boolean
-}
+import { useFavorites } from "../context/FavoritesContext"  
 
 const MovieGrid: React.FC<MovieGridProps> = ({
   title,
@@ -18,11 +12,11 @@ const MovieGrid: React.FC<MovieGridProps> = ({
   loading = false,
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null)
+  useFavorites()  
 
   const scrollLeft = () => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth } = scrollRef.current
-
       if (scrollLeft <= 0) {
         scrollRef.current.scrollTo({ 
           left: scrollRef.current.scrollWidth, 
@@ -37,7 +31,6 @@ const MovieGrid: React.FC<MovieGridProps> = ({
   const scrollRight = () => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth, scrollWidth } = scrollRef.current
-
       if (scrollLeft + clientWidth >= scrollWidth - 10) {
         scrollRef.current.scrollTo({ left: 0, behavior: "smooth" })
       } else {
@@ -46,7 +39,6 @@ const MovieGrid: React.FC<MovieGridProps> = ({
     }
   }
 
-
   return (
     <section className="movie-section">
       <div className="container">
@@ -54,25 +46,32 @@ const MovieGrid: React.FC<MovieGridProps> = ({
 
         {layout === "scroll" ? (
           <div className="movie-scroll-container">
-            <button className="scroll-button scroll-button-left" onClick={scrollLeft}>
-              ‹
-            </button>
+            <button className="scroll-button scroll-button-left" onClick={scrollLeft}>‹</button>
 
             <div className="movie-scroll-wrapper" ref={scrollRef}>
               {loading
                 ? [...Array(6)].map((_, i) => <SkeletonMovieCard key={i} />)
-                : movies.map((m) => <MovieCard key={m.id} movie={m} />)}
+                : movies.map((m) => (
+                    <MovieCard
+                      key={m.id}
+                      movie={m}
+                    />
+                  ))}
             </div>
 
-            <button className="scroll-button scroll-button-right" onClick={scrollRight}>
-              ›
-            </button>
+            <button className="scroll-button scroll-button-right" onClick={scrollRight}>›</button>
           </div>
         ) : (
           <div className="movie-grid">
             {loading
               ? [...Array(8)].map((_, i) => <SkeletonMovieCard key={i} />)
-              : movies.map((m) => <MovieCard key={m.id} movie={m} />)}
+              : movies.map((m) => (
+                  <MovieCard
+                    key={m.id}
+                    movie={m}
+
+                  />
+                ))}
           </div>
         )}
       </div>

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
-import { Play, Plus, Star, Clock, Calendar } from "lucide-react"
+import { Play, Heart, Star, Clock, Calendar } from "lucide-react"
 import { movieService } from "../services/movieService"
 import { getImageUrl, formatDate, formatRuntime } from "../config/api"
 import type { MovieDetails, Cast, Movie } from "../types/movie"
 import TrailerModal from "../components/TrailerModal"
+import { useFavorites } from "../context/FavoritesContext"  
 import "./MovieDetail.css"
 
 const MovieDetail = (): React.ReactElement => {
@@ -13,7 +14,9 @@ const MovieDetail = (): React.ReactElement => {
   const [cast, setCast] = useState<Cast[]>([])
   const [similarMovies, setSimilarMovies] = useState<Movie[]>([])
   const [loading, setLoading] = useState<boolean>(true)
-  const [showTrailer, setShowTrailer] = useState(false) 
+  const [showTrailer, setShowTrailer] = useState(false)
+  const { favorites, toggleFavorite } = useFavorites()
+  const isFavorite = movie ? favorites.includes(movie.id) : false
 
   useEffect(() => {
     const fetchMovieData = async (): Promise<void> => {
@@ -121,9 +124,13 @@ const MovieDetail = (): React.ReactElement => {
                 <Play size={20} fill="currentColor" />
                 Watch Now
               </button>
-              <button className="btn btn-secondary">
-                <Plus size={20} />
-                Add to List
+
+              <button
+                className={`btn btn-heart favorite-btn ${isFavorite ? "active" : ""}`}
+                onClick={() => toggleFavorite(movie.id)}
+              >
+                <Heart size={20} fill={isFavorite ? "red" : "none"} />
+                {isFavorite ? "Added" : "Add to List"}
               </button>
             </div>
           </div>

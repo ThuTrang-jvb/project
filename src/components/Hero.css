@@ -137,17 +137,6 @@
   transform: translateY(-2px);
 }
 
-.btn-secondary {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.btn-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
-}
-
 .btn-info {
   background-color: transparent;
   color: white;
@@ -157,6 +146,23 @@
 .btn-info:hover {
   background-color: rgba(255, 255, 255, 0.1);
   transform: translateY(-2px);
+}
+.btn-heart {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-heart:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-heart.active {
+  color: #e50914;
+  background-color: rgba(229, 9, 20, 0.2);
+  border-color: #e50914;
 }
 
 @media (max-width: 992px) {

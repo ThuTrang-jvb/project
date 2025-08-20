@@ -99,13 +99,16 @@ export interface SpokenLanguage {
 
 export interface MovieCardProps {
   movie: Movie
+  type?: "movie" | "tv"
 }
 
 export interface MovieGridProps {
   title: string
-  movies: (Movie |Series )[]
-  layout?: "grid" | "horizontal";
+  movies: Movie[]
+  layout?: "scroll" | "grid"
+  loading?: boolean
 }
+
 export interface Country {
   iso_3166_1: string
   english_name: string
@@ -147,6 +150,10 @@ export interface CreditItem {
 export interface CombinedCredits {
   cast: CreditItem[];
   crew: CreditItem[];
+}
+export interface FavoritesContextType {
+  favorites: number[]
+  toggleFavorite: (id: number) => void
 }
 
 

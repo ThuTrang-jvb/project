@@ -3,6 +3,7 @@ import Hero from "../components/Hero"
 import MovieGrid from "../components/MovieGrid"
 import { movieService } from "../services/movieService"
 import type { Movie } from "../types/movie"
+import { useFavorites } from "../context/FavoritesContext"   
 import "./HomePage.css" 
 
 const HomePage = (): React.ReactElement => {
@@ -11,6 +12,8 @@ const HomePage = (): React.ReactElement => {
   const [topRatedMovies, setTopRatedMovies] = useState<Movie[]>([])
   const [upcomingMovies, setUpcomingMovies] = useState<Movie[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+
+  useFavorites()
 
   useEffect(() => {
     const fetchMovies = async (): Promise<void> => {
@@ -48,17 +51,38 @@ const HomePage = (): React.ReactElement => {
   return (
     <div className="home-page">
       <Hero />
+
       {trendingMovies.length > 0 && (
-        <MovieGrid title="Trending Now" movies={trendingMovies} layout="scroll" />
+        <MovieGrid 
+          title="Trending Now" 
+          movies={trendingMovies} 
+          layout="scroll" 
+          loading={loading}
+        />
       )}
       {popularMovies.length > 0 && (
-        <MovieGrid title="Popular Movies" movies={popularMovies} layout="scroll" />
+        <MovieGrid 
+          title="Popular Movies" 
+          movies={popularMovies} 
+          layout="scroll" 
+          loading={loading}
+        />
       )}
       {topRatedMovies.length > 0 && (
-        <MovieGrid title="Top Rated" movies={topRatedMovies} layout="scroll" />
+        <MovieGrid 
+          title="Top Rated" 
+          movies={topRatedMovies} 
+          layout="scroll" 
+          loading={loading}
+        />
       )}
       {upcomingMovies.length > 0 && (
-        <MovieGrid title="Coming Soon" movies={upcomingMovies} layout="scroll" />
+        <MovieGrid 
+          title="Coming Soon" 
+          movies={upcomingMovies} 
+          layout="scroll" 
+          loading={loading}
+        />
       )}
     </div>
   )

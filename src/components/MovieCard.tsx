@@ -1,33 +1,32 @@
-import React, { useState } from "react";
-import { Play, Plus, Star } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { getImageUrl } from "../config/api";
-import type { Movie } from "../types/movie";
-import TrailerModal from "./TrailerModal";
-import "./MovieCard.css";
+import React, { useState } from "react"
+import { Play, Heart, Star } from "lucide-react"
+import { useNavigate } from "react-router-dom"
+import { getImageUrl } from "../config/api"
+import type { MovieCardProps } from "../types/movie"   
+import TrailerModal from "./TrailerModal"
+import { useFavorites } from "../context/FavoritesContext"
+import "./MovieCard.css"
 
-interface MovieCardProps {
-  movie: Movie;
-  type?: "movie" | "tv"; 
-}
+const MovieCard: React.FC<MovieCardProps> = ({ movie, type = "movie" }) => {
+  const navigate = useNavigate()
+  const [showTrailer, setShowTrailer] = useState(false)
 
-const MovieCard = ({ movie, type = "movie" }: MovieCardProps): React.ReactElement => {
-  const navigate = useNavigate();
-  const [showTrailer, setShowTrailer] = useState(false);
+  const { favorites, toggleFavorite } = useFavorites()
+  const isFavorite = favorites.includes(movie.id)
 
   const handleCardClick = () => {
-    // Điều hướng đến trang chi tiết phim
-    navigate(`/${type}/${movie.id}`);
-  };
+    navigate(`/${type}/${movie.id}`)
+  }
 
-  const handleActionClick = (e: React.MouseEvent, action: string) => {
-    e.stopPropagation(); // chặn click lan ra ngoài card
-    if (action === "play") {
-      setShowTrailer(true);
-    } else if (action === "add") {
-      console.log(`Added ${movie.title} to list`);
-    }
-  };
+  const handlePlayClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setShowTrailer(true)
+  }
+
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    toggleFavorite(movie.id)
+  }
 
   return (
     <>
@@ -39,17 +38,14 @@ const MovieCard = ({ movie, type = "movie" }: MovieCardProps): React.ReactElemen
             className="poster-image"
           />
           <div className="movie-overlay">
-            <button
-              className="action-btn play-btn"
-              onClick={(e) => handleActionClick(e, "play")}
-            >
+            <button className="action-btn play-btn" onClick={handlePlayClick}>
               <Play size={20} fill="currentColor" />
             </button>
             <button
-              className="action-btn add-btn"
-              onClick={(e) => handleActionClick(e, "add")}
+              className={`action-btn add-btn ${isFavorite ? "active" : ""}`}
+              onClick={handleFavoriteClick}
             >
-              <Plus size={20} />
+              <Heart size={20} fill={isFavorite ? "red" : "none"} />
             </button>
           </div>
         </div>
@@ -72,7 +68,7 @@ const MovieCard = ({ movie, type = "movie" }: MovieCardProps): React.ReactElemen
         />
       )}
     </>
-  );
-};
+  )
+}
 
-export default MovieCard;
+export default MovieCard

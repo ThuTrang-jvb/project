@@ -14,8 +14,8 @@
   padding: 20px;
   display: flex;
   justify-content: space-between;
-  align-items: center; /* ✅ Canh giữa theo chiều dọc */
-  flex-wrap: nowrap; /* ✅ Đảm bảo hàng ngang ở màn hình lớn */
+  align-items: center; 
+  flex-wrap: nowrap;
 }
 
 .header.shrink {
@@ -41,7 +41,7 @@
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
-  align-items: center; /* ✅ Thêm để icon + text thẳng hàng */
+  align-items: center; 
 }
 
 .nav-link,
@@ -54,8 +54,8 @@
   color: white;
   text-decoration: none;
   position: relative;
-  display: inline-flex; /* ✅ Giúp icon + text ngang hàng */
-  align-items: center; /* ✅ Giúp icon thẳng hàng */
+  display: inline-flex; 
+  align-items: center; 
   background: transparent;
   border: none;
   cursor: pointer;
