@@ -3,6 +3,7 @@ import { Play, Plus, Info, ChevronLeft, ChevronRight } from "lucide-react"
 import { movieService } from "../services/movieService"
 import { getImageUrl, formatDate } from "../config/api"
 import type { Movie } from "../types/movie"
+import TrailerModal from "./TrailerModal"   // 👈 import modal
 import "./Hero.css"
 
 const AUTO_SLIDE_INTERVAL = 20000
@@ -10,6 +11,8 @@ const AUTO_SLIDE_INTERVAL = 20000
 const Hero = (): React.ReactElement => {
   const [movies, setMovies] = useState<Movie[]>([])
   const [currentIndex, setCurrentIndex] = useState<number>(0)
+  const [isTrailerOpen, setIsTrailerOpen] = useState<boolean>(false)
+  const [selectedMovieId, setSelectedMovieId] = useState<number | null>(null)
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -20,6 +23,7 @@ const Hero = (): React.ReactElement => {
   }, [])
 
   useEffect(() => {
+    if (movies.length === 0) return
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % movies.length)
     }, AUTO_SLIDE_INTERVAL)
@@ -32,6 +36,12 @@ const Hero = (): React.ReactElement => {
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % movies.length)
+  }
+
+  const handleWatchNow = () => {
+    if (!movies[currentIndex]) return
+    setSelectedMovieId(movies[currentIndex].id)
+    setIsTrailerOpen(true)
   }
 
   const movie = movies[currentIndex]
@@ -73,7 +83,7 @@ const Hero = (): React.ReactElement => {
             <span className="genre">Action, Adventure</span>
           </div>
           <div className="hero-buttons">
-            <button className="btn btn-primary">
+            <button className="btn btn-primary" onClick={handleWatchNow}>
               <Play size={20} fill="currentColor" />
               Watch Now
             </button>
@@ -88,6 +98,14 @@ const Hero = (): React.ReactElement => {
           </div>
         </div>
       </div>
+
+      {isTrailerOpen && selectedMovieId && (
+        <TrailerModal
+          id={selectedMovieId}
+          type="movie"
+          onClose={() => setIsTrailerOpen(false)}
+        />
+      )}
     </section>
   )
 }

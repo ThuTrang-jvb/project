@@ -8,7 +8,7 @@ import "./MovieCard.css";
 
 interface MovieCardProps {
   movie: Movie;
-  type?: "movie" | "tv"; // mặc định là movie
+  type?: "movie" | "tv"; 
 }
 
 const MovieCard = ({ movie, type = "movie" }: MovieCardProps): React.ReactElement => {
@@ -16,11 +16,12 @@ const MovieCard = ({ movie, type = "movie" }: MovieCardProps): React.ReactElemen
   const [showTrailer, setShowTrailer] = useState(false);
 
   const handleCardClick = () => {
+    // Điều hướng đến trang chi tiết phim
     navigate(`/${type}/${movie.id}`);
   };
 
   const handleActionClick = (e: React.MouseEvent, action: string) => {
-    e.stopPropagation();
+    e.stopPropagation(); // chặn click lan ra ngoài card
     if (action === "play") {
       setShowTrailer(true);
     } else if (action === "add") {
@@ -64,7 +65,11 @@ const MovieCard = ({ movie, type = "movie" }: MovieCardProps): React.ReactElemen
       </div>
 
       {showTrailer && (
-        <TrailerModal id={movie.id} type={type} onClose={() => setShowTrailer(false)} />
+        <TrailerModal
+          id={movie.id}
+          type={type}
+          onClose={() => setShowTrailer(false)}
+        />
       )}
     </>
   );

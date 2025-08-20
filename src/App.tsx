@@ -26,7 +26,7 @@ function App(): React.ReactElement {
           <Route path="/genre/:id" element={<GenrePage />} />
           <Route path="/country" element={<CountryPage />} />
           <Route path="/search" element={<SearchPage />} />
-          <Route path="/movies/single" element={<MoviePage />} />
+          <Route path="/movies" element={<MoviePage />} />
           <Route path="/series" element={<SeriesPage />} />
           <Route path="/series/:id" element={<SeriesDetailPage />} />
           <Route path="/actor/:id" element={<ActorPage />} />

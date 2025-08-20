@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react"
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams } from "react-router-dom"
 import { Play, Plus, Star, Clock, Calendar } from "lucide-react"
 import { movieService } from "../services/movieService"
 import { getImageUrl, formatDate, formatRuntime } from "../config/api"
 import type { MovieDetails, Cast, Movie } from "../types/movie"
+import TrailerModal from "../components/TrailerModal"
 import "./MovieDetail.css"
-
 
 const MovieDetail = (): React.ReactElement => {
   const { id } = useParams<{ id: string }>()
@@ -13,6 +13,7 @@ const MovieDetail = (): React.ReactElement => {
   const [cast, setCast] = useState<Cast[]>([])
   const [similarMovies, setSimilarMovies] = useState<Movie[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+  const [showTrailer, setShowTrailer] = useState(false) 
 
   useEffect(() => {
     const fetchMovieData = async (): Promise<void> => {
@@ -25,12 +26,10 @@ const MovieDetail = (): React.ReactElement => {
           movieService.getMovieCast(movieId),
           movieService.getSimilarMovies(movieId),
         ])
-        console.log("Backdrop URL:", getImageUrl(movieDetails.backdrop_path, "w1280"))
-        console.log("Backdrop path:", movieDetails.backdrop_path)
 
         setMovie(movieDetails)
-        setCast(movieCast.slice(0, 5)) 
-        setSimilarMovies(similar.slice(0, 8)) 
+        setCast(movieCast.slice(0, 5))
+        setSimilarMovies(similar.slice(0, 8))
       } catch (error) {
         console.error("Error fetching movie details:", error)
       } finally {
@@ -68,11 +67,10 @@ const MovieDetail = (): React.ReactElement => {
         <div className="movie-backdrop">
           <img src={getImageUrl(movie.backdrop_path, "w1280") || "/placeholder.svg"} alt={movie.title} />
           <div className="backdrop-overlay"></div>
-          
         </div>
 
         <div className="movie-content blurred-backdrop">
-          <div className="movie-poster-section"> 
+          <div className="movie-poster-section">
             <img
               src={getImageUrl(movie.poster_path) || "/placeholder.svg"}
               alt={movie.title}
@@ -119,7 +117,7 @@ const MovieDetail = (): React.ReactElement => {
             )}
 
             <div className="movie-actions">
-              <button className="btn btn-primary">
+              <button className="btn btn-primary" onClick={() => setShowTrailer(true)}>
                 <Play size={20} fill="currentColor" />
                 Watch Now
               </button>
@@ -160,6 +158,14 @@ const MovieDetail = (): React.ReactElement => {
             </div>
           </div>
         </div>
+      )}
+
+      {showTrailer && (
+        <TrailerModal
+          id={movie.id}
+          type="movie"
+          onClose={() => setShowTrailer(false)}
+        />
       )}
     </div>
   )
