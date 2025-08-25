@@ -95,13 +95,26 @@
     padding: 10px 12px 10px 36px;
   }
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 520px) {
   .search-container {
-    max-width: 200px;
+    max-width: 240px;
   }
 
   .search-input {
-    font-size: 0.95rem;
-    padding: 10px 12px 10px 36px;
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 8px 10px 8px 32px;
+  }
+
+  .search-result-poster {
+    width: 32px;
+  }
+
+  .search-result-info h4 {
+    font-size: 0.85rem;
+  }
+
+  .search-result-info span {
+    font-size: 0.75rem;
   }
 }

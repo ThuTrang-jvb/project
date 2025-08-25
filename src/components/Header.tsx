@@ -1,7 +1,7 @@
 import type React from "react"
 import { useEffect, useState } from "react"
 import { useLocation, Link } from "react-router-dom"
-import { Menu, Clock, Film } from "lucide-react"
+import { Menu, X, Clock, Film } from "lucide-react"
 import GenreDropdown from "./GenreDropdown"
 import CountryDropdown from "./CountryDropDown"
 import SearchBar from "./SearchBar"
@@ -34,9 +34,7 @@ const Header = (): React.ReactElement => {
               <Film size={28} className="logo-icon" />
               <span className="logo-text">CinemaFlix</span>
             </Link>
-            <button className="menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              <Menu size={24} />
-            </button>
+            
           </div>
 
           <div className="header-center">
@@ -44,11 +42,13 @@ const Header = (): React.ReactElement => {
               <SearchBar />
             </div>
           </div>
+          <div className="header-right">
+            <button className="menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
 
           <nav className={`nav ${isMenuOpen ? "nav-open" : ""}`}>
-            <Link to="/" className={`nav-link ${isActive("/") ? "active" : ""}`}>
-              Home
-            </Link>
             <GenreDropdown />
             <CountryDropdown />
             <Link to="/movies" className={`nav-link ${isActive("/movies") ? "active" : ""}`}>

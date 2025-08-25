@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { movieService } from "../services/movieService"
 import MovieGrid from "../components/MovieGrid"
 import type { Movie } from "../types/movie"
+import "./MoviePage.css"
 
 const MoviePage = (): React.ReactElement => {
   const [movies, setMovies] = useState<Movie[]>([])
@@ -55,6 +56,7 @@ const MoviePage = (): React.ReactElement => {
 
   return (
     <div className="container">
+      <h1 className="movie-page-title">Movie</h1> 
       <MovieGrid title="" movies={movies} />
       {hasMore && (
         <div

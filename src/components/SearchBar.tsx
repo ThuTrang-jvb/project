@@ -33,7 +33,8 @@ const SearchBar = (): React.ReactElement => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && searchQuery.length > 2) {
       navigate(`/search?query=${encodeURIComponent(searchQuery)}`)
-      setSearchResults([]) 
+      setSearchResults([])
+      setSearchQuery("") 
     }
   }
 
@@ -71,7 +72,8 @@ const SearchBar = (): React.ReactElement => {
                 if (item.media_type === "movie") navigate(`/movie/${item.id}`)
                 else if (item.media_type === "tv") navigate(`/series/${item.id}`)
                 else if (item.media_type === "person") navigate(`/actor/${item.id}`)
-                setSearchResults([]) 
+                setSearchResults([])
+                setSearchQuery("") 
               }}
               style={{ cursor: "pointer" }}
             >

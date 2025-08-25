@@ -1,0 +1,100 @@
+.history-page {
+  padding-top: 8rem;
+  padding-bottom: 336px;
+  padding-left: 8rem;
+  padding-right: 8rem;
+}
+
+.history-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.history-buttons button {
+  padding: 0.6rem 1.8rem;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  background: #e5e7eb;
+  color: #374151;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+}
+
+.history-buttons button:hover {
+  background: #d1d5db;
+  transform: translateY(-2px);
+}
+
+.history-buttons button.active {
+  background: #2563eb;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+  transform: scale(1.05);
+}
+
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.history-grid p {
+  grid-column: 1 / -1;
+  text-align: flex-start;
+  font-size: 1.1rem;
+}
+
+.history-grid > div {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.history-grid > div:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+@media (max-width: 768px) {
+  .history-page {
+    padding: 6rem 2rem 200px 2rem; 
+  }
+
+  .history-buttons {
+    justify-content: center;  
+    flex-wrap: wrap;         
+    gap: 0.8rem;
+  }
+
+  .history-buttons button {
+    font-size: 0.9rem;
+    padding: 0.5rem 1.4rem;
+  }
+
+  .history-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .history-page {
+    padding: 5rem 1rem 150px 1rem; 
+  }
+
+  .history-buttons {
+    flex-direction: column;  
+    align-items: stretch;
+  }
+
+  .history-buttons button {
+    width: 100%;             
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .history-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); 
+    gap: 0.8rem;
+  }
+}

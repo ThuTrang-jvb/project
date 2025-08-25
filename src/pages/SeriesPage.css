@@ -8,13 +8,6 @@
   margin-bottom: 3rem;
 }
 
-.section-title {
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin: 0 0 1rem 0;
-  color: #fff;
-}
-
 .loading-text,
 .empty-text {
   color: #bfc5cc;

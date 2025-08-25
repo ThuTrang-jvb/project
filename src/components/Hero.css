@@ -36,6 +36,7 @@
   position: absolute;
   bottom: 2rem; 
   left: 10rem;
+  right: 10rem;
   z-index: 1;
 }
 
@@ -164,8 +165,34 @@
   background-color: rgba(229, 9, 20, 0.2);
   border-color: #e50914;
 }
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
 
-@media (max-width: 992px) {
+.hero-arrow:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.hero-arrow.left {
+  left: 20px;
+}
+
+.hero-arrow.right {
+  right: 20px;
+}
+
+
+@media (max-width: 1280px) {
   .hero-content {
     left: 4rem;
     right: 4rem;
@@ -178,6 +205,19 @@
 
   .hero-description {
     font-size: 1.1rem;
+  }
+}
+@media (max-width: 992px) {
+  .hero-arrow {
+    padding: 8px;
+  }
+
+  .hero-arrow.left {
+    left: 12px;
+  }
+
+  .hero-arrow.right {
+    right: 12px;
   }
 }
 
@@ -211,30 +251,16 @@
     width: 100%;
     justify-content: center;
   }
-}
+  .hero-arrow {
+    padding: 6px;
+  }
 
-.hero-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 20;
-  background-color: rgba(0, 0, 0, 0.4);
-  color: white;
-  border: none;
-  padding: 12px;
-  cursor: pointer;
-  border-radius: 50%;
-  transition: background-color 0.3s;
-}
+  .hero-arrow.left {
+    left: 6px;
+  }
 
-.hero-arrow:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  .hero-arrow.right {
+    right: 6px;
+  }
 }
-
-.hero-arrow.left {
-  left: 20px;
-}
-
-.hero-arrow.right {
-  right: 20px;
-} 
+ 

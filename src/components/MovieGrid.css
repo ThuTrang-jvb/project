@@ -1,12 +1,10 @@
-.movie-section {
-  padding: 2rem 0;
-}
-
 .section-title {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
   color: white;
+  padding: 0 1rem;
+
 }
 
 .movie-scroll-container {
@@ -32,19 +30,12 @@
   transition: all 0.3s ease;
   border: none;
 }
-
 .scroll-button:hover {
   background: rgba(0, 0, 0, 0.9);
   transform: translateY(-50%) scale(1.1);
 }
-
-.scroll-button-left {
-  left: -20px;
-}
-
-.scroll-button-right {
-  right: -20px;
-}
+.scroll-button-left { left: -20px; }
+.scroll-button-right { right: -20px; }
 
 .movie-scroll-wrapper {
   display: flex;
@@ -55,10 +46,7 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
-
-.movie-scroll-wrapper::-webkit-scrollbar {
-  display: none;
-}
+.movie-scroll-wrapper::-webkit-scrollbar { display: none; }
 
 .movie-grid {
   display: grid;
@@ -77,10 +65,7 @@
   text-decoration: none;
   color: inherit;
 }
-
-.movie-card:hover {
-  transform: scale(1.05);
-}
+.movie-card:hover { transform: scale(1.05); }
 
 .movie-poster {
   position: relative;
@@ -89,44 +74,58 @@
   border-radius: 10px;
   overflow: hidden;
 }
-
 .movie-poster img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
+
+@media (max-width: 1280px) {
+  .section-title {
+    font-size: 1.35rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .section-title {
+    font-size: 1.3rem;
+    margin-bottom: 1.1rem;
+  }
+}
+
 @media (max-width: 768px) {
+  .section-title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
   .movie-scroll-wrapper {
     gap: 0.75rem;
     padding: 0 0.5rem;
   }
 
-  .movie-card {
-    flex: 0 0 140px;
-  }
+  .movie-card { flex: 0 0 140px; }
 
   .scroll-button {
     width: 38px;
     height: 38px;
   }
 
-  .scroll-button-left {
-    left: -15px;
-  }
-
-  .scroll-button-right {
-    right: -15px;
-  }
+  .scroll-button-left { left: -15px; }
+  .scroll-button-right { right: -15px; }
 
   .movie-grid {
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 1rem;
     padding: 0 0.5rem;
   }
+}
 
+@media (max-width: 480px) {
   .section-title {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    margin-bottom: 0.85rem;
   }
 }

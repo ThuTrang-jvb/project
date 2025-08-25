@@ -36,6 +36,28 @@
   animation: spin 0.6s linear infinite;
 }
 
+.movie-page-title {
+  font-size: 2rem;
+  line-height: 1.2;
+  font-weight: bold;
+  color: #ffffff;
+  padding-top: 40px;
+  padding-left: 40px;
+}
+
+@media (min-width: 640px) {
+  .movie-page-title {
+    font-size: 30px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .movie-page-title {
+    font-size: 36px;
+  }
+}
+
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);

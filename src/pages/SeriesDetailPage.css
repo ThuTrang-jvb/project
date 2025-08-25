@@ -199,15 +199,9 @@
 .container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 50px 2rem;
+  padding-top: 50px;
 }
 
-.section-title {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
-  color: white;
-}
 
 .related-grid {
   display: grid;

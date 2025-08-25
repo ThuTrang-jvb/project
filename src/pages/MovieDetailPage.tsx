@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { Play, Heart, Star, Clock, Calendar } from "lucide-react"
 import { movieService } from "../services/movieService"
 import { getImageUrl, formatDate, formatRuntime } from "../config/api"
 import type { MovieDetails, Cast, Movie } from "../types/movie"
 import TrailerModal from "../components/TrailerModal"
 import { useFavorites } from "../context/FavoritesContext"  
+import MovieCard from "../components/MovieCard"
 import "./MovieDetail.css"
 
 const MovieDetail = (): React.ReactElement => {
@@ -143,24 +144,11 @@ const MovieDetail = (): React.ReactElement => {
             <h2 className="section-title">More Like This</h2>
             <div className="related-grid">
               {similarMovies.map((relatedMovie) => (
-                <Link
+                <MovieCard
                   key={relatedMovie.id}
-                  to={`/movie/${relatedMovie.id}`}
-                  className="related-card"
-                >
-                  <img
-                    src={getImageUrl(relatedMovie.poster_path) || "/placeholder.svg"}
-                    alt={relatedMovie.title}
-                  />
-                  <div className="related-info">
-                    <h3>{relatedMovie.title}</h3>
-                    <p className="movie-date">{movie.release_date}</p>
-                    <div className="related-rating">
-                      <Star size={12} fill="currentColor" />
-                      {relatedMovie.vote_average.toFixed(1)}
-                    </div>
-                  </div>
-                </Link>
+                  movie={relatedMovie}
+                  type="movie"
+                />
               ))}
             </div>
           </div>
