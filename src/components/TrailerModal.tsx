@@ -10,7 +10,7 @@ interface TrailerModalProps {
 
 const TrailerModal: React.FC<TrailerModalProps> = ({ id, type, onClose }) => {
   const [trailerKey, setTrailerKey] = useState<string | null>(null);
-  const [loadingMessage, setLoadingMessage] = useState("Chưa tìm thấy trailer...");
+  const [loadingMessage, setLoadingMessage] = useState("No trailer found yet...");
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -46,7 +46,7 @@ const TrailerModal: React.FC<TrailerModalProps> = ({ id, type, onClose }) => {
 
     timer = setTimeout(() => {
       if (!trailerKey) {
-        setLoadingMessage("Không tìm thấy trailer.");
+        setLoadingMessage("Trailer not found.");
       }
     }, 5000);
 
@@ -55,7 +55,6 @@ const TrailerModal: React.FC<TrailerModalProps> = ({ id, type, onClose }) => {
 
   return (
     <div className="trailer-modal" onClick={onClose}>
-      {/* nút X ra ngoài */}
       <button className="close-btn" onClick={onClose}>
         <X size={28} />
       </button>

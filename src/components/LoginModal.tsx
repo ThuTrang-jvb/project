@@ -32,27 +32,27 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     setError("");
 
     if (!isValidEmail(identifier) && !isValidPhone(identifier)) {
-      setError("Vui lòng nhập email hợp lệ hoặc số điện thoại 10 số.");
+      setError("Please enter a valid email or a 10-digit phone number.");
       return;
     }
 
     if (isSignup) {
       if (!displayName.trim()) {
-        setError("Vui lòng nhập tên hiển thị.");
+        setError("Please enter a display name.");
         return;
       }
       if (password !== confirmPassword) {
-        setError("Mật khẩu nhập lại không khớp!");
+        setError("Passwords do not match!");
         return;
       }
       localStorage.setItem(
         "user",
         JSON.stringify({ identifier, displayName })
       );
-      alert("Đăng ký thành công!");
+      alert("Sign up successful!");
     } else {
       localStorage.setItem("user", JSON.stringify({ identifier }));
-      alert("Đăng nhập thành công!");
+      alert("Login successful!");
     }
 
     resetForm();
@@ -65,9 +65,9 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
         <button className="modal-close" onClick={onClose}>
           ✖
         </button>
-        <h2>{isSignup ? "Đăng ký" : "Đăng nhập"}</h2>
+        <h2>{isSignup ? "Sign Up" : "Login"}</h2>
         <p>
-          {isSignup ? "Đã có tài khoản?" : "Nếu bạn chưa có tài khoản,"}{" "}
+          {isSignup ? "Already have an account?" : "Don't have an account?"}{" "}
           <span
             className="link-text"
             onClick={() => {
@@ -76,14 +76,14 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
               resetForm();
             }}
           >
-            {isSignup ? "Đăng nhập" : "đăng ký"}
+            {isSignup ? "Login" : "Sign up"}
           </span>
         </p>
         <form onSubmit={handleSubmit}>
           {isSignup && (
             <input
               type="text"
-              placeholder="Tên hiển thị"
+              placeholder="Display Name"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
               required
@@ -91,14 +91,14 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
           )}
           <input
             type="text"
-            placeholder="Email hoặc Số điện thoại"
+            placeholder="Email or Phone Number"
             value={identifier}
             onChange={(e) => setIdentifier(e.target.value)}
             required
           />
           <input
             type="password"
-            placeholder="Mật khẩu"
+            placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -106,7 +106,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
           {isSignup && (
             <input
               type="password"
-              placeholder="Nhập lại mật khẩu"
+              placeholder="Confirm Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
@@ -114,7 +114,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
           )}
           {error && <p className="error-text">{error}</p>}
           <button type="submit">
-            {isSignup ? "Đăng ký" : "Đăng nhập"}
+            {isSignup ? "Sign Up" : "Login"}
           </button>
         </form>
       </div>

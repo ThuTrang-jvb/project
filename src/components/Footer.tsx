@@ -1,5 +1,16 @@
 import type React from "react"
 import "./Footer.css"
+import Header from "./Header"
+import HomePage from "../pages/HomePage"
+import MovieDetail from "../pages/MovieDetailPage"
+import GenrePage from "../pages/GenrePage"
+import CountryPage from "../pages/CountryPage"
+import SearchPage from "../pages/SearchPage"
+import MoviePage from "../pages/MoviePage"
+import SeriesPage from "../pages/SeriesPage"
+import SeriesDetailPage from "../pages/SeriesDetailPage"
+import ActorPage from "../pages/ActorPage"
+import HistoryPage from "../pages/HistoryPage"
 
 const Footer: React.FC = () => {
   return (
@@ -7,47 +18,47 @@ const Footer: React.FC = () => {
       <div className="footer-content">
         <div className="footer-section">
           <h3>CinemaFlix</h3>
-          <p>Khám phá thế giới điện ảnh với hàng ngàn bộ phim và series chất lượng cao.</p>
+          <p>Explore the world of cinema with thousands of high-quality movies and series.</p>
         </div>
 
         <div className="footer-section">
-          <h4>Danh mục</h4>
+          <h4>Categories</h4>
           <ul>
             <li>
-              <a href="/movies/single">Phim lẻ</a>
+              <a href="/movie/:id">Movies</a>
             </li>
             <li>
-              <a href="/series">Phim bộ</a>
+              <a href="/series">Series</a>
             </li>
             <li>
-              <a href="/genre">Thể loại</a>
+              <a href="/genre">Genres</a>
             </li>
             <li>
-              <a href="/country">Quốc gia</a>
+              <a href="/country">Countries</a>
             </li>
           </ul>
         </div>
 
         <div className="footer-section">
-          <h4>Liên kết</h4>
+          <h4>Links</h4>
           <ul>
             <li>
-              <a href="/search">Tìm kiếm</a>
+              <a href="/search">Search</a>
             </li>
             <li>
-              <a href="/">Trang chủ</a>
+              <a href="/">Home</a>
             </li>
             <li>
-              <a href="#about">Giới thiệu</a>
+              <a href="#about">About</a>
             </li>
             <li>
-              <a href="#contact">Liên hệ</a>
+              <a href="#contact">Contact</a>
             </li>
           </ul>
         </div>
 
         <div className="footer-section">
-          <h4>Theo dõi chúng tôi</h4>
+          <h4>Follow Us</h4>
           <div className="social-links">
             <a href="#" aria-label="Facebook">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -70,10 +81,10 @@ const Footer: React.FC = () => {
 
       <div className="footer-bottom">
         <div className="footer-bottom-content">
-          <p>&copy; 2024 Cinema Flix. Tất cả quyền được bảo lưu.</p>
+          <p>&copy; 2024 Cinema Flix. All rights reserved.</p>
           <div className="footer-links">
-            <a href="#privacy">Chính sách bảo mật</a>
-            <a href="#terms">Điều khoản sử dụng</a>
+            <a href="#privacy">Privacy Policy</a>
+            <a href="#terms">Terms of Use</a>
           </div>
         </div>
       </div>

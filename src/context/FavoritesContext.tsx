@@ -4,11 +4,13 @@ import type { FavoritesContextType } from "../types/movie"
 const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined)
 
 export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [favorites, setFavorites] = useState<number[]>([])
-  useEffect(() => {
+  // Khởi tạo trực tiếp từ localStorage
+  const [favorites, setFavorites] = useState<number[]>(() => {
     const saved = localStorage.getItem("favorites")
-    if (saved) setFavorites(JSON.parse(saved))
-  }, [])
+    return saved ? JSON.parse(saved) : []
+  })
+
+  // Mỗi khi favorites thay đổi thì lưu lại
   useEffect(() => {
     localStorage.setItem("favorites", JSON.stringify(favorites))
   }, [favorites])
